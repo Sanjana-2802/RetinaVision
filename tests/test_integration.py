@@ -1,0 +1,33 @@
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+import pytest
+from fastapi.testclient import TestClient
+from app.main import app
+from app.ml.presets import generate_preset_images
+
+@pytest.fixture(scope="module")
+def client():
+    generate_preset_images()
+    with TestClient(app) as c:
+        yield c
+
+def test_full_diagnosis_flow_with_preset(client):
+    """Test full pipeline: POST preset -> Preprocessing -> PyTorch DL -> Grad-CAM -> Nutrition -> PDF -> Result"""
+    form_data = {
+        "preset_filename": "sample_dr_moderate.jpg",
+        "patient_name": "Test Progression Subject",
+        "patient_age": 60,
+        "patient_gender": "Male",
+        "medical_history": "Type-2 Diabetes (15 years), Diabetic Neuropathy"
+    }
+
+    response = client.post("/diagnose", data=form_data, follow_redirects=True)
+    assert response.status_code == 200
+    assert "Diagnostic Analysis & Health Plan" in response.text
+    assert "Diabetic Retinopathy" in response.text
+    assert "Explainable AI (XAI) Visual Findings" in response.text
+    assert "Personalized Nutritional Regimen" in response.text
+    assert "Download PDF Report" in response.text

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AI Eye Disease Identification & Health Recommendation System{% endblock %}</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        medical: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        clinical: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Three.js (for 3D Eyeball) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Chart.js (for Progression Monitoring) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom Light Theme Styles -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+    
+    {% block head %}{% endblock %}
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased">
+
+    <!-- Top Academic Accreditation Banner -->
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a href="/" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-medical-600 to-clinical-500 flex items-center justify-center text-white shadow-md shadow-medical-500/20 group-hover:scale-105 transition-transform">
+                        <i data-lucide="eye" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <div class="text-lg font-bold tracking-tight text-slate-900 flex items-center gap-1.5">
+                            Retina<span class="text-medical-600">Care</span> AI
+                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-clinical-50 text-clinical-700 border border-clinical-200">XAI V2.0</span>
+                        </div>
+                        <p class="text-[10px] text-slate-500 font-medium tracking-wide">Clinical Deep Learning Diagnostics</p>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-1">
+                    <a href="/" class="px-3.5 py-2 rounded-lg text-sm font-medium transition-colors {% if active_page == 'home' %}text-medical-600 bg-medical-50 font-semibold{% else %}text-slate-600 hover:text-medical-600 hover:bg-slate-100{% endif %}">
+                        <span class="flex items-center gap-1.5"><i data-lucide="home" class="w-4 h-4"></i> Home</span>
+                    </a>
+                    <a href="/diagnose" class="px-3.5 py-2 rounded-lg text-sm font-medium transition-colors {% if active_page == 'diagnose' %}text-medical-600 bg-medical-50 font-semibold{% else %}text-slate-600 hover:text-medical-600 hover:bg-slate-100{% endif %}">
+                        <span class="flex items-center gap-1.5"><i data-lucide="scan-line" class="w-4 h-4"></i> AI Diagnosis</span>
+                    </a>
+                    <a href="/patients" class="px-3.5 py-2 rounded-lg text-sm font-medium transition-colors {% if active_page == 'patients' %}text-medical-600 bg-medical-50 font-semibold{% else %}text-slate-600 hover:text-medical-600 hover:bg-slate-100{% endif %}">
+                        <span class="flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> Patients & History</span>
+                    </a>
+                    <a href="/hospitals" class="px-3.5 py-2 rounded-lg text-sm font-medium transition-colors {% if active_page == 'hospitals' %}text-medical-600 bg-medical-50 font-semibold{% else %}text-slate-600 hover:text-medical-600 hover:bg-slate-100{% endif %}">
+                        <span class="flex items-center gap-1.5"><i data-lucide="hospital" class="w-4 h-4"></i> Eye Specialists</span>
+                    </a>
+                    <a href="/about" class="px-3.5 py-2 rounded-lg text-sm font-medium transition-colors {% if active_page == 'about' %}text-medical-600 bg-medical-50 font-semibold{% else %}text-slate-600 hover:text-medical-600 hover:bg-slate-100{% endif %}">
+                        <span class="flex items-center gap-1.5"><i data-lucide="info" class="w-4 h-4"></i> About Project</span>
+                    </a>
+                </nav>
+
+                <!-- Quick Action Button -->
+                <div class="flex items-center space-x-3">
+                    <a href="/diagnose" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-semibold rounded-xl shadow-sm text-white bg-gradient-to-r from-medical-600 to-clinical-600 hover:from-medical-700 hover:to-clinical-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-medical-500 transition-all hover:shadow-md hover:scale-[1.02]">
+                        <i data-lucide="sparkles" class="w-4 h-4 mr-2"></i>
+                        New Scan
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-16 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-3">
+                        <div class="w-8 h-8 rounded-lg bg-medical-600 flex items-center justify-center text-white">
+                            <i data-lucide="eye" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-base font-bold text-slate-900">RetinaCare AI</span>
+                    </div>
+                    <p class="text-sm text-slate-600 max-w-md leading-relaxed mb-4">
+                        Advanced AI and Deep Learning platform for retinal fundus disease identification, Explainable AI (Grad-CAM), severity classification, personalized nutrition regimens, and patient progression monitoring.
+                    </p>
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-lg text-xs text-slate-700 font-medium">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        Deep Learning Model Active (Torch CPU/CUDA)
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">Project Modules</h4>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li><a href="/diagnose" class="hover:text-medical-600 transition-colors">Fundus Disease Detection</a></li>
+                        <li><a href="/diagnose" class="hover:text-medical-600 transition-colors">Explainable AI (Grad-CAM)</a></li>
+                        <li><a href="/patients" class="hover:text-medical-600 transition-colors">Patient Progression Tracker</a></li>
+                        <li><a href="/hospitals" class="hover:text-medical-600 transition-colors">Eye Specialist Referral</a></li>
+                    </ul>
+                </div>
+
+
+            </div>
+
+            <div class="border-t border-slate-200 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-2">
+                <div>
+                    © 2026 AI-Based Eye Disease Identification and Health Recommendation System. Designed for Clinical Research.
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-slate-400">Light Theme Certified</span>
+                    <span>•</span>
+                    <a href="/about" class="hover:text-medical-600 transition-colors">Documentation</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

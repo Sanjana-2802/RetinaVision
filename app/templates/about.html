@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}About - AI-Based Eye Disease Identification and Health Recommendation System{% endblock %}
+
+{% block content %}
+<div class="py-12 bg-slate-50 min-h-[calc(100vh-4rem)]">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        
+        <!-- Title Banner -->
+        <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-medical-50 text-medical-700 text-xs font-bold border border-medical-200">
+                BATCH NO: 33 • CAPSTONE PROJECT
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
+                AI-Based Eye Disease Identification and Health Recommendation System
+            </h1>
+            <p class="text-sm text-slate-600 leading-relaxed">
+                A clinically interpretable, deep-learning powered ophthalmology decision support system designed to assist clinicians and patients in early screening of retinal diseases.
+            </p>
+
+            <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center gap-6 text-xs text-slate-500">
+                <div><strong>Framework:</strong> FastAPI & Jinja2</div>
+                <div><strong>Deep Learning:</strong> PyTorch & Torchvision</div>
+                <div><strong>Explainability:</strong> Grad-CAM (Target Convolutional Layers)</div>
+                <div><strong>Reporting:</strong> ReportLab Clinical PDF Generator</div>
+            </div>
+        </div>
+
+        <!-- Academic Team Credentials -->
+        <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
+            <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                <i data-lucide="graduation-cap" class="w-5 h-5 text-medical-600"></i>
+                Project Team & Academic Credentials
+            </h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1 text-center">
+                    <span class="text-[11px] font-bold text-medical-600 uppercase tracking-wider block">Student 1</span>
+                    <div class="font-mono text-base font-bold text-slate-900">23551A42B3</div>
+                    <div class="text-xs text-slate-500">Batch 33 Contributor</div>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1 text-center">
+                    <span class="text-[11px] font-bold text-medical-600 uppercase tracking-wider block">Student 2</span>
+                    <div class="font-mono text-base font-bold text-slate-900">23551A4275</div>
+                    <div class="text-xs text-slate-500">Batch 33 Contributor</div>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1 text-center">
+                    <span class="text-[11px] font-bold text-medical-600 uppercase tracking-wider block">Student 3</span>
+                    <div class="font-mono text-base font-bold text-slate-900">24555A4207</div>
+                    <div class="text-xs text-slate-500">Batch 33 Contributor</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project Abstract & Objectives -->
+        <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
+            <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                <i data-lucide="book-open" class="w-5 h-5 text-medical-600"></i>
+                Project Abstract
+            </h2>
+            <blockquote class="text-sm text-slate-700 leading-relaxed border-l-4 border-medical-500 pl-4 py-1 italic bg-slate-50 rounded-r-xl">
+                "Eye diseases can lead to serious vision problems if they are not detected at an early stage. This project proposes an AI-Based Eye Disease Identification and Health Recommendation System that uses Artificial Intelligence (AI) and Deep Learning to identify eye diseases from retinal (fundus) images. The system can detect common eye diseases, classify their severity, and use Explainable AI (XAI) to help users understand the prediction. After identifying the disease, the system provides personalized food recommendations, nutritional guidance, eye care and lifestyle suggestions to help improve eye health. For severe cases, it recommends nearby eye specialists and hospitals for immediate medical attention. The system also stores patient history, monitors disease progression by comparing previous reports, and generates downloadable medical reports. By combining disease identification, health recommendations, and patient monitoring in a single platform, the proposed system aims to support early diagnosis, improve eye care, and help users make better healthcare decisions."
+            </blockquote>
+
+            <div class="space-y-3 pt-2">
+                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Key Objectives Fulfilled:</h3>
+                <ul class="space-y-2 text-xs text-slate-600">
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                        <span><strong>Multi-Class Retinal Diagnostic Engine:</strong> Identifies Diabetic Retinopathy, Glaucoma, Cataract, AMD, and Hypertensive Retinopathy.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                        <span><strong>Explainable AI (Grad-CAM):</strong> Solves the neural black-box problem by highlighting pathognomonic lesion regions for ophthalmologists.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                        <span><strong>Tailored Health & Nutritional Blueprints:</strong> Delivers specific vitamins (Lutein, Zeaxanthin, Omega-3, AREDS-2) and daily meal plans.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                        <span><strong>Longitudinal Progression Tracker:</strong> Quantifies biomarker trajectory (improving / stable / deteriorating) over chronological scans.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                        <span><strong>Hospital-Ready PDF Reports:</strong> Generates formatted clinical PDFs complete with visuals, metrics, and accreditation.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

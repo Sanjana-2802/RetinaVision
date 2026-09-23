@@ -1,0 +1,435 @@
+{% extends "base.html" %}
+
+{% block title %}Diagnostic Findings - {{ scan.predicted_disease }} - RetinaCare AI{% endblock %}
+
+{% block content %}
+<div class="py-10 bg-slate-50 min-h-[calc(100vh-4rem)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+        <!-- Top Header & Action Toolbar -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+            <div>
+                <div class="flex items-center gap-2 mb-1.5">
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-medical-100 text-medical-800 border border-medical-200">
+                        Scan ID: #{{ scan.id }}
+                    </span>
+                    <span class="text-xs text-slate-500">
+                        Exam Date: {{ scan.scan_date.strftime("%d %b %Y, %I:%M %p") }}
+                    </span>
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-3">
+                    Diagnostic Analysis & Health Plan
+                    {% if scan.severity in ['Severe', 'Proliferative / Advanced'] %}
+                    <span class="text-xs px-3 py-1 rounded-full bg-rose-100 text-rose-700 font-bold border border-rose-300 pulse-ring">
+                        Urgent Attention Required
+                    </span>
+                    {% endif %}
+                </h1>
+                <p class="text-xs text-slate-500 mt-1">
+                    Patient: <strong class="text-slate-700">{{ patient.name }}</strong> ({{ patient.patient_id }} • {{ patient.age }}y • {{ patient.gender }})
+                </p>
+            </div>
+
+            <!-- Download & Action Buttons -->
+            <div class="flex flex-wrap items-center gap-2.5">
+                <a href="/report/download/{{ scan.id }}" class="inline-flex items-center px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-medical-600 hover:bg-medical-700 shadow-sm transition-all hover:scale-[1.02]">
+                    <i data-lucide="download" class="w-4 h-4 mr-1.5"></i>
+                    Download PDF Report
+                </a>
+                <button onclick="window.print()" class="inline-flex items-center px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 shadow-xs transition-colors">
+                    <i data-lucide="printer" class="w-4 h-4 mr-1.5 text-slate-500"></i>
+                    Print
+                </button>
+                <a href="/patient/{{ patient.id }}" class="inline-flex items-center px-3.5 py-2.5 rounded-xl text-xs font-semibold text-clinical-700 bg-clinical-50 border border-clinical-200 hover:bg-clinical-100 shadow-xs transition-colors">
+                    <i data-lucide="trending-up" class="w-4 h-4 mr-1.5 text-clinical-600"></i>
+                    View Progression
+                </a>
+            </div>
+        </div>
+
+        <!-- Section 1: Visual Fundus & Explainable AI (XAI) Comparator -->
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i data-lucide="scan-eye" class="w-5 h-5 text-medical-600"></i>
+                        Explainable AI (XAI) Visual Findings
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-0.5">Toggle between original photography, CLAHE contrast enhancement, and Grad-CAM lesion localization.</p>
+                </div>
+
+                <!-- View Switcher Tabs -->
+                <div class="inline-flex p-1 bg-slate-100 rounded-xl text-xs font-semibold text-slate-600">
+                    <button type="button" onclick="switchVisualView('overlay')" id="btn-tab-overlay" class="px-3 py-1.5 rounded-lg bg-white text-medical-700 shadow-xs font-bold transition-all">
+                        Grad-CAM Overlay
+                    </button>
+                    <button type="button" onclick="switchVisualView('original')" id="btn-tab-original" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all">
+                        Original Fundus
+                    </button>
+                    <button type="button" onclick="switchVisualView('preprocessed')" id="btn-tab-preprocessed" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all">
+                        CLAHE Enhanced
+                    </button>
+                    <button type="button" onclick="switchVisualView('sidebyside')" id="btn-tab-sidebyside" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all">
+                        Side-by-Side
+                    </button>
+                </div>
+            </div>
+
+            <!-- Single Full-View Showcase (Default Overlay) -->
+            <div id="single-view-container" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-6 flex justify-center">
+                    <div class="w-full max-w-md aspect-square rounded-2xl overflow-hidden border-2 border-slate-200 shadow-lg relative bg-black">
+                        <img id="main-visual-img" src="/static/uploads/{{ scan.gradcam_filename }}" alt="Retinal Visual" class="w-full h-full object-cover">
+                        <div id="main-visual-badge" class="absolute bottom-3 left-3 px-3 py-1 rounded-md bg-black/75 backdrop-blur-md text-white text-xs font-semibold">
+                            Grad-CAM Lesion Overlay (Active Weights)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Clinical Explanation details -->
+                <div class="lg:col-span-6 space-y-5">
+                    <div class="bg-medical-50/60 rounded-2xl p-5 border border-medical-100 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold uppercase tracking-wider text-medical-800">Primary Neural Activation Target</span>
+                            <span class="text-[11px] font-semibold text-medical-600 bg-white px-2 py-0.5 rounded border border-medical-200">MobileNetV3 Hooked</span>
+                        </div>
+                        <p class="text-sm font-semibold text-slate-800">
+                            {{ xai_explanation.summary }}
+                        </p>
+                        <div class="text-xs text-slate-600">
+                            <strong>Key Anatomical Focus:</strong> {{ xai_explanation.key_regions }}
+                        </div>
+                    </div>
+
+                    <!-- Findings Checklist -->
+                    <div class="space-y-2">
+                        <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Identified Retinal Biomarkers:</h4>
+                        <ul class="space-y-2 text-xs text-slate-600">
+                            {% for f in xai_explanation.findings %}
+                            <li class="flex items-start gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200/80">
+                                <i data-lucide="alert-circle" class="w-4 h-4 text-medical-600 shrink-0 mt-0.5"></i>
+                                <span>{{ f }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <!-- Colormap Interpretation Legend -->
+                    <div class="p-3 bg-slate-100 rounded-xl flex items-center justify-between text-[11px] text-slate-600">
+                        <span class="font-medium">Heatmap Intensity:</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-blue-600 font-bold">Low (Blue)</span>
+                            <div class="w-24 h-2.5 rounded-full bg-gradient-to-r from-blue-500 via-green-400 via-yellow-400 to-red-600"></div>
+                            <span class="text-rose-600 font-bold">High Pathology (Red)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side-by-Side Dual View (Hidden by default) -->
+            <div id="sidebyside-container" class="hidden grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="space-y-2 text-center">
+                    <div class="aspect-square rounded-2xl overflow-hidden border border-slate-200 bg-black shadow-sm">
+                        <img src="/static/uploads/{{ scan.image_filename }}" alt="Original" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-xs font-bold text-slate-700">1. Original Fundus Scan</span>
+                </div>
+                <div class="space-y-2 text-center">
+                    <div class="aspect-square rounded-2xl overflow-hidden border border-slate-200 bg-black shadow-sm">
+                        <img src="/static/uploads/{{ scan.preprocessed_filename }}" alt="CLAHE" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-xs font-bold text-slate-700">2. Green Channel CLAHE</span>
+                </div>
+                <div class="space-y-2 text-center">
+                    <div class="aspect-square rounded-2xl overflow-hidden border border-slate-200 bg-black shadow-sm">
+                        <img src="/static/uploads/{{ scan.gradcam_filename }}" alt="Grad-CAM" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-xs font-bold text-medical-700">3. Grad-CAM Overlay</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Section 2: Clinical Metrics & Staging Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- Metric 1: Primary Diagnosis -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Identified Condition</span>
+                <div class="text-2xl font-extrabold text-slate-900 leading-tight">
+                    {{ scan.predicted_disease }}
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="px-2.5 py-1 rounded-md text-xs font-bold {% if scan.severity == 'Normal' %}bg-emerald-100 text-emerald-800{% elif scan.severity == 'Mild' %}bg-amber-100 text-amber-800{% elif scan.severity == 'Moderate' %}bg-orange-100 text-orange-800{% else %}bg-rose-100 text-rose-800{% endif %}">
+                        {{ scan.severity }} Stage
+                    </span>
+                    <span class="text-xs text-slate-500 font-semibold">{{ (scan.confidence * 100) | round(1) }}% Match</span>
+                </div>
+            </div>
+
+            <!-- Metric 2: Cup-to-Disc Ratio (Glaucoma) -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Cup-to-Disc (CDR)</span>
+                    <i data-lucide="eye" class="w-4 h-4 text-slate-400"></i>
+                </div>
+                <div class="text-2xl font-extrabold text-slate-900">
+                    {{ scan.cup_to_disc_ratio }}
+                </div>
+                <div class="text-xs text-slate-600">
+                    {% if scan.cup_to_disc_ratio > 0.65 %}
+                    <span class="text-rose-600 font-bold">⚠️ Elevated Glaucoma Risk (> 0.65)</span>
+                    {% elif scan.cup_to_disc_ratio > 0.40 %}
+                    <span class="text-amber-600 font-bold">Borderline Enlarged (0.40 - 0.65)</span>
+                    {% else %}
+                    <span class="text-emerald-600 font-bold">✓ Normal Physiological Ratio (&lt; 0.40)</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Metric 3: Macular Integrity Index (AMD) -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Macular Integrity</span>
+                    <i data-lucide="target" class="w-4 h-4 text-slate-400"></i>
+                </div>
+                <div class="text-2xl font-extrabold text-slate-900">
+                    {{ scan.macular_integrity }}%
+                </div>
+                <div class="text-xs text-slate-600">
+                    {% if scan.macular_integrity < 75 %}
+                    <span class="text-rose-600 font-bold">⚠️ Drusen Activity Detected</span>
+                    {% else %}
+                    <span class="text-emerald-600 font-bold">✓ Intact Foveal Architecture</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Metric 4: Retinal Risk Score -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Overall Risk Index</span>
+                    <i data-lucide="activity" class="w-4 h-4 text-slate-400"></i>
+                </div>
+                <div class="text-2xl font-extrabold text-slate-900">
+                    {{ scan.risk_score }} <span class="text-sm font-normal text-slate-400">/ 100</span>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-2">
+                    <div class="h-2 rounded-full {% if scan.risk_score > 70 %}bg-rose-500{% elif scan.risk_score > 35 %}bg-amber-500{% else %}bg-emerald-500{% endif %}" style="width: {{ scan.risk_score }}%"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Section 3: Personalized Health, Nutrition & Eye Care Plan -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left: Tailored Food Recommendations & Meal Plan -->
+            <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                            <i data-lucide="utensils" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-slate-900">Personalized Nutritional Regimen</h3>
+                            <p class="text-xs text-slate-500">Clinical dietary strategy targeted to protect retinal cells from {{ scan.predicted_disease }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Essential Nutrients Table -->
+                <div class="space-y-3">
+                    <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Recommended Super-Nutrients:</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {% for n in recommendations.nutrients %}
+                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
+                            <div class="font-bold text-xs text-slate-900 flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                {{ n.name }}
+                            </div>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">{{ n.benefit }}</p>
+                            <div class="text-[10px] text-emerald-700 font-semibold pt-1">
+                                Sources: {{ n.sources }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Daily Meal Blueprint -->
+                <div class="space-y-3 pt-2">
+                    <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Suggested Daily Meal Plan:</h4>
+                    <div class="space-y-2 text-xs">
+                        <div class="flex items-start gap-3 p-3 rounded-xl bg-emerald-50/50 border border-emerald-100">
+                            <span class="font-bold text-emerald-800 shrink-0 w-16">Breakfast:</span>
+                            <span class="text-slate-700">{{ recommendations.meal_plan.breakfast }}</span>
+                        </div>
+                        <div class="flex items-start gap-3 p-3 rounded-xl bg-emerald-50/50 border border-emerald-100">
+                            <span class="font-bold text-emerald-800 shrink-0 w-16">Lunch:</span>
+                            <span class="text-slate-700">{{ recommendations.meal_plan.lunch }}</span>
+                        </div>
+                        <div class="flex items-start gap-3 p-3 rounded-xl bg-emerald-50/50 border border-emerald-100">
+                            <span class="font-bold text-emerald-800 shrink-0 w-16">Snack:</span>
+                            <span class="text-slate-700">{{ recommendations.meal_plan.snack }}</span>
+                        </div>
+                        <div class="flex items-start gap-3 p-3 rounded-xl bg-emerald-50/50 border border-emerald-100">
+                            <span class="font-bold text-emerald-800 shrink-0 w-16">Dinner:</span>
+                            <span class="text-slate-700">{{ recommendations.meal_plan.dinner }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Foods strictly to avoid -->
+                <div class="p-4 rounded-2xl bg-rose-50/60 border border-rose-200 space-y-2">
+                    <div class="text-xs font-bold text-rose-800 flex items-center gap-1.5">
+                        <i data-lucide="slash" class="w-4 h-4"></i> Dietary Items to Strictly Restrict:
+                    </div>
+                    <div class="space-y-1.5 text-xs text-rose-900">
+                        {% for a in recommendations.foods_to_avoid %}
+                        <div class="flex items-start gap-2">
+                            <span class="text-rose-500 font-bold">•</span>
+                            <div><strong>{{ a.item }}:</strong> {{ a.reason }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right: Daily Eye Care Routines & Specialist Hospital Referral -->
+            <div class="lg:col-span-5 space-y-6">
+                
+                <!-- Eye Care & Lifestyle Routines -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-5">
+                    <div class="flex items-center gap-2.5 border-b border-slate-100 pb-3">
+                        <div class="w-9 h-9 rounded-xl bg-medical-50 text-medical-600 flex items-center justify-center">
+                            <i data-lucide="clock" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-slate-900">Daily Eye Care & Lifestyle</h3>
+                            <p class="text-xs text-slate-500">Ergonomics and preventive habits</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Daily Directives (20-20-20 Rule):</h4>
+                        <ul class="space-y-2 text-xs text-slate-700">
+                            {% for r in recommendations.eye_care_routine %}
+                            <li class="flex items-start gap-2 p-2.5 rounded-xl bg-slate-50 border border-slate-200/70">
+                                <i data-lucide="check" class="w-4 h-4 text-medical-600 shrink-0 mt-0.5"></i>
+                                <span>{{ r }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="space-y-3 pt-2">
+                        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Systemic Risk Modifications:</h4>
+                        <ul class="space-y-2 text-xs text-slate-700">
+                            {% for l in recommendations.lifestyle %}
+                            <li class="flex items-start gap-2 p-2.5 rounded-xl bg-slate-50 border border-slate-200/70">
+                                <i data-lucide="activity" class="w-4 h-4 text-clinical-600 shrink-0 mt-0.5"></i>
+                                <span>{{ l }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Hospital & Specialist Referral Card (Prominent for Severe/Moderate) -->
+                {% if recommendations.hospital_recommendation %}
+                <div class="bg-white rounded-3xl p-6 border-2 border-rose-200 shadow-md space-y-4">
+                    <div class="flex items-center justify-between border-b border-rose-100 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-rose-500 animate-pulse"></span>
+                            <h3 class="text-sm font-bold text-rose-900">Recommended Eye Specialist Care</h3>
+                        </div>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-100 text-rose-700">High Priority</span>
+                    </div>
+
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Due to the staging of <strong>{{ scan.severity }} {{ scan.predicted_disease }}</strong>, an immediate in-person dilated clinical evaluation is recommended.
+                    </p>
+
+                    <div class="space-y-3">
+                        {% for h in nearby_hospitals[:2] %}
+                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-xs text-slate-900 truncate">{{ h.name }}</span>
+                                <span class="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">{{ h.distance }}</span>
+                            </div>
+                            <div class="text-[11px] text-slate-500 truncate">{{ h.address }}</div>
+                            <div class="flex items-center justify-between pt-1">
+                                <span class="text-xs font-mono text-slate-700 font-semibold">{{ h.phone }}</span>
+                                <a href="https://maps.google.com/?q={{ h.map_query }}" target="_blank" class="text-xs font-bold text-medical-600 hover:underline flex items-center gap-1">
+                                    Get Directions <i data-lucide="external-link" class="w-3 h-3"></i>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <a href="/hospitals?disease={{ scan.predicted_disease }}" class="w-full py-2.5 rounded-xl text-xs font-bold text-center text-medical-700 bg-medical-50 hover:bg-medical-100 border border-medical-200 block transition-colors">
+                        Browse All Nearby Eye Specialists & Tertiary Hospitals →
+                    </a>
+                </div>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const originalSrc = "/static/uploads/{{ scan.image_filename }}";
+    const preprocessedSrc = "/static/uploads/{{ scan.preprocessed_filename }}";
+    const overlaySrc = "/static/uploads/{{ scan.gradcam_filename }}";
+
+    const mainImg = document.getElementById('main-visual-img');
+    const mainBadge = document.getElementById('main-visual-badge');
+    const singleContainer = document.getElementById('single-view-container');
+    const sideBySideContainer = document.getElementById('sidebyside-container');
+
+    const tabs = {
+        'overlay': document.getElementById('btn-tab-overlay'),
+        'original': document.getElementById('btn-tab-original'),
+        'preprocessed': document.getElementById('btn-tab-preprocessed'),
+        'sidebyside': document.getElementById('btn-tab-sidebyside')
+    };
+
+    function resetTabStyles() {
+        Object.values(tabs).forEach(btn => {
+            btn.className = "px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all";
+        });
+    }
+
+    function switchVisualView(mode) {
+        resetTabStyles();
+        tabs[mode].className = "px-3 py-1.5 rounded-lg bg-white text-medical-700 shadow-xs font-bold transition-all";
+
+        if (mode === 'sidebyside') {
+            singleContainer.classList.add('hidden');
+            sideBySideContainer.classList.remove('hidden');
+        } else {
+            sideBySideContainer.classList.add('hidden');
+            singleContainer.classList.remove('hidden');
+
+            if (mode === 'overlay') {
+                mainImg.src = overlaySrc;
+                mainBadge.textContent = "Grad-CAM Lesion Overlay (Active Weights)";
+            } else if (mode === 'original') {
+                mainImg.src = originalSrc;
+                mainBadge.textContent = "Original Retinal Fundus Scan";
+            } else if (mode === 'preprocessed') {
+                mainImg.src = preprocessedSrc;
+                mainBadge.textContent = "CLAHE Contrast Enhanced (Green Channel)";
+            }
+        }
+    }
+</script>
+{% endblock %}

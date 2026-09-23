@@ -1,0 +1,337 @@
+{% extends "base.html" %}
+
+{% block title %}AI Retinal Fundus Diagnosis - RetinaCare AI{% endblock %}
+
+{% block content %}
+<div class="py-10 bg-slate-50 min-h-[calc(100vh-4rem)]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Page Title & Academic Notice -->
+        <div class="mb-8">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-medical-50 text-medical-700 text-xs font-semibold mb-2 border border-medical-200">
+                        <i data-lucide="microscope" class="w-3.5 h-3.5"></i>
+                        Clinical AI Diagnostics Studio • Batch 33
+                    </div>
+                    <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Retinal Fundus Image Analysis</h1>
+                    <p class="text-sm text-slate-600 mt-1">Upload a retinal photograph or select a pre-calibrated clinical preset to identify pathologies and generate Explainable AI heatmaps.</p>
+                </div>
+
+                <div class="flex items-center gap-2 text-xs text-slate-500 bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-xs">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
+                    <span>Secure Local Deep Learning Model</span>
+                </div>
+            </div>
+        </div>
+
+        <form action="/diagnose" method="POST" enctype="multipart/form-data" id="diagnosis-form" class="space-y-8">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- Left Column: Patient Profile Details -->
+                <div class="lg:col-span-4 space-y-6">
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-5">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                                <i data-lucide="user" class="w-4 h-4 text-medical-600"></i>
+                                Patient Demographics
+                            </h3>
+                            <span class="text-[11px] text-medical-600 font-semibold">Step 1</span>
+                        </div>
+
+                        <!-- Existing Patient Dropdown -->
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">Select Existing Patient (Optional)</label>
+                            <select name="existing_patient_id" id="patient-select" onchange="fillPatientDetails(this)" class="w-full text-xs rounded-xl border-slate-300 shadow-xs focus:border-medical-500 focus:ring-medical-500 p-2.5 bg-slate-50">
+                                <option value="">-- Create New Patient or Anonymous --</option>
+                                {% for p in patients %}
+                                <option value="{{ p.id }}" data-name="{{ p.name }}" data-age="{{ p.age }}" data-gender="{{ p.gender }}" data-history="{{ p.medical_history }}">
+                                    {{ p.patient_id }} - {{ p.name }} ({{ p.age }}y, {{ p.gender }})
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Manual Patient Fields -->
+                        <div class="space-y-3" id="patient-fields">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Patient Full Name</label>
+                                <input type="text" name="patient_name" id="p-name" placeholder="e.g. Eleanor Vance" value="Sample Patient" class="w-full text-xs rounded-xl border-slate-300 shadow-xs focus:border-medical-500 focus:ring-medical-500 p-2.5">
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Age</label>
+                                    <input type="number" name="patient_age" id="p-age" value="54" min="1" max="120" class="w-full text-xs rounded-xl border-slate-300 shadow-xs focus:border-medical-500 focus:ring-medical-500 p-2.5">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Gender</label>
+                                    <select name="patient_gender" id="p-gender" class="w-full text-xs rounded-xl border-slate-300 shadow-xs focus:border-medical-500 focus:ring-medical-500 p-2.5 bg-white">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Relevant Medical History</label>
+                                <textarea name="medical_history" id="p-history" rows="3" placeholder="e.g. Type-2 Diabetes for 10 years, mild hypertension" class="w-full text-xs rounded-xl border-slate-300 shadow-xs focus:border-medical-500 focus:ring-medical-500 p-2.5">Type-2 Diabetes Mellitus (HbA1c: 8.2%), Mild Hypertension</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clinical Tip Card -->
+                    <div class="bg-clinical-50/70 rounded-2xl p-5 border border-clinical-200 text-xs text-clinical-900 space-y-2">
+                        <div class="font-bold flex items-center gap-1.5 text-clinical-800">
+                            <i data-lucide="info" class="w-4 h-4"></i> Image Requirements
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            Fundus photographs should clearly capture the posterior pole, optic disc, and macula under mydriatic or non-mydriatic digital fundus cameras.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Column: Image Uploader & Presets -->
+                <div class="lg:col-span-8 space-y-6">
+                    
+                    <!-- 1-Click Clinical Preset Library -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                                <i data-lucide="sparkles" class="w-4 h-4 text-clinical-600"></i>
+                                Instant Clinical Presets (1-Click Demonstration)
+                            </h3>
+                            <span class="text-[11px] text-slate-400">Pre-calibrated ground truth</span>
+                        </div>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            
+                            <!-- Preset 1: DR Moderate -->
+                            <button type="button" onclick="selectPreset('sample_dr_moderate.jpg', 'Diabetic Retinopathy (Mod)')" class="preset-card group p-2.5 rounded-xl border border-slate-200 hover:border-medical-500 hover:bg-medical-50/40 text-left transition-all">
+                                <div class="w-full aspect-square rounded-lg overflow-hidden bg-slate-100 mb-2 border border-slate-200/80">
+                                    <img src="/static/images/presets/sample_dr_moderate.jpg" alt="DR" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+                                <div class="text-[11px] font-bold text-slate-800 group-hover:text-medical-600 truncate">DR (Moderate)</div>
+                                <div class="text-[10px] text-slate-500">Exudates & Hemorrhages</div>
+                            </button>
+
+                            <!-- Preset 2: Glaucoma -->
+                            <button type="button" onclick="selectPreset('sample_glaucoma.jpg', 'Glaucoma (Advanced Cupping)')" class="preset-card group p-2.5 rounded-xl border border-slate-200 hover:border-medical-500 hover:bg-medical-50/40 text-left transition-all">
+                                <div class="w-full aspect-square rounded-lg overflow-hidden bg-slate-100 mb-2 border border-slate-200/80">
+                                    <img src="/static/images/presets/sample_glaucoma.jpg" alt="Glaucoma" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+                                <div class="text-[11px] font-bold text-slate-800 group-hover:text-medical-600 truncate">Glaucoma</div>
+                                <div class="text-[10px] text-slate-500">Elevated CDR (0.78)</div>
+                            </button>
+
+                            <!-- Preset 3: Cataract -->
+                            <button type="button" onclick="selectPreset('sample_cataract.jpg', 'Cataract (Lens Opacity)')" class="preset-card group p-2.5 rounded-xl border border-slate-200 hover:border-medical-500 hover:bg-medical-50/40 text-left transition-all">
+                                <div class="w-full aspect-square rounded-lg overflow-hidden bg-slate-100 mb-2 border border-slate-200/80">
+                                    <img src="/static/images/presets/sample_cataract.jpg" alt="Cataract" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+                                <div class="text-[11px] font-bold text-slate-800 group-hover:text-medical-600 truncate">Cataract</div>
+                                <div class="text-[10px] text-slate-500">Optical Media Haze</div>
+                            </button>
+
+                            <!-- Preset 4: AMD -->
+                            <button type="button" onclick="selectPreset('sample_amd.jpg', 'Age-Related Macular Degeneration')" class="preset-card group p-2.5 rounded-xl border border-slate-200 hover:border-medical-500 hover:bg-medical-50/40 text-left transition-all">
+                                <div class="w-full aspect-square rounded-lg overflow-hidden bg-slate-100 mb-2 border border-slate-200/80">
+                                    <img src="/static/images/presets/sample_amd.jpg" alt="AMD" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+                                <div class="text-[11px] font-bold text-slate-800 group-hover:text-medical-600 truncate">Macular Degen (AMD)</div>
+                                <div class="text-[10px] text-slate-500">Foveal Drusen Deposits</div>
+                            </button>
+
+                        </div>
+
+                        <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 text-xs">
+                            <span class="text-slate-500">More Presets:</span>
+                            <button type="button" onclick="selectPreset('sample_dr_mild.jpg', 'Diabetic Retinopathy (Mild)')" class="text-medical-600 hover:underline font-medium">DR (Mild)</button>
+                            <span class="text-slate-300">•</span>
+                            <button type="button" onclick="selectPreset('sample_dr_severe.jpg', 'Diabetic Retinopathy (Severe)')" class="text-medical-600 hover:underline font-medium">DR (Severe)</button>
+                            <span class="text-slate-300">•</span>
+                            <button type="button" onclick="selectPreset('sample_hypertensive.jpg', 'Hypertensive Retinopathy')" class="text-medical-600 hover:underline font-medium">Hypertensive Retinopathy</button>
+                            <span class="text-slate-300">•</span>
+                            <button type="button" onclick="selectPreset('sample_normal.jpg', 'Healthy Normal Retina')" class="text-clinical-600 hover:underline font-bold">Healthy Normal</button>
+                        </div>
+                    </div>
+
+                    <!-- Upload Zone & Live Preview -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                                <i data-lucide="upload-cloud" class="w-4 h-4 text-medical-600"></i>
+                                Upload Fundus Photograph
+                            </h3>
+                            <span id="selected-badge" class="hidden px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                Ready for Diagnosis
+                            </span>
+                        </div>
+
+                        <!-- Hidden input for preset filename -->
+                        <input type="hidden" name="preset_filename" id="preset-filename" value="">
+
+                        <!-- Drag and Drop Dropzone -->
+                        <div id="dropzone" class="border-2 border-dashed border-slate-300 hover:border-medical-500 rounded-2xl p-8 text-center cursor-pointer transition-colors bg-slate-50/50 hover:bg-medical-50/20 relative scan-laser-container">
+                            
+                            <!-- Laser scan line (active during analysis) -->
+                            <div id="scan-laser" class="scan-laser-line hidden"></div>
+
+                            <input type="file" name="file" id="file-input" accept="image/png, image/jpeg, image/jpg" class="hidden" onchange="handleFileSelect(this)">
+                            
+                            <div id="upload-prompt" class="space-y-3">
+                                <div class="w-14 h-14 mx-auto rounded-full bg-medical-50 text-medical-600 flex items-center justify-center shadow-xs">
+                                    <i data-lucide="image-plus" class="w-7 h-7"></i>
+                                </div>
+                                <div class="text-sm text-slate-700 font-semibold">
+                                    Drop retinal fundus scan here, or <span class="text-medical-600 underline">browse files</span>
+                                </div>
+                                <p class="text-xs text-slate-400">Supports high-res PNG, JPG, JPEG (Max 15MB)</p>
+                            </div>
+
+                            <!-- Live Preview Area -->
+                            <div id="preview-area" class="hidden flex flex-col items-center justify-center space-y-3">
+                                <div class="w-48 h-48 rounded-2xl overflow-hidden border-2 border-medical-500 shadow-lg relative bg-black">
+                                    <img id="preview-img" src="" alt="Preview" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                                    <div id="preview-label" class="absolute bottom-2 left-2 right-2 text-center text-[11px] text-white font-medium bg-black/60 backdrop-blur-sm rounded py-0.5 truncate px-1">
+                                        Custom Scan
+                                    </div>
+                                </div>
+                                <button type="button" onclick="clearSelectedImage()" class="text-xs text-rose-600 hover:text-rose-700 font-semibold flex items-center gap-1">
+                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Change / Remove Scan
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Action Submit Button -->
+                        <div class="pt-2">
+                            <button type="submit" id="submit-btn" class="w-full py-4 rounded-xl text-base font-bold text-white bg-gradient-to-r from-medical-600 to-clinical-600 hover:from-medical-700 hover:to-clinical-700 shadow-lg shadow-medical-500/20 hover:shadow-medical-500/35 transition-all flex items-center justify-center gap-2">
+                                <i data-lucide="scan" class="w-5 h-5"></i>
+                                Analyze Retinal Scan with Explainable AI
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('file-input');
+    const previewArea = document.getElementById('preview-area');
+    const uploadPrompt = document.getElementById('upload-prompt');
+    const previewImg = document.getElementById('preview-img');
+    const previewLabel = document.getElementById('preview-label');
+    const presetFilename = document.getElementById('preset-filename');
+    const selectedBadge = document.getElementById('selected-badge');
+    const scanLaser = document.getElementById('scan-laser');
+    const diagnosisForm = document.getElementById('diagnosis-form');
+    const submitBtn = document.getElementById('submit-btn');
+
+    // Click to upload
+    dropzone.addEventListener('click', (e) => {
+        if (!e.target.closest('button')) {
+            fileInput.click();
+        }
+    });
+
+    // Drag and drop handlers
+    dropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzone.classList.add('border-medical-500', 'bg-medical-50/30');
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+        dropzone.classList.remove('border-medical-500', 'bg-medical-50/30');
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('border-medical-500', 'bg-medical-50/30');
+        if (e.dataTransfer.files.length > 0) {
+            fileInput.files = e.dataTransfer.files;
+            handleFileSelect(fileInput);
+        }
+    });
+
+    function handleFileSelect(input) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                previewLabel.textContent = file.name;
+                presetFilename.value = ""; // Clear preset
+                showPreview();
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function selectPreset(filename, label) {
+        presetFilename.value = filename;
+        fileInput.value = ""; // Clear uploaded file
+        previewImg.src = '/static/images/presets/' + filename;
+        previewLabel.textContent = label;
+        showPreview();
+    }
+
+    function showPreview() {
+        uploadPrompt.classList.add('hidden');
+        previewArea.classList.remove('hidden');
+        selectedBadge.classList.remove('hidden');
+    }
+
+    function clearSelectedImage() {
+        fileInput.value = "";
+        presetFilename.value = "";
+        previewImg.src = "";
+        previewArea.classList.add('hidden');
+        uploadPrompt.classList.remove('hidden');
+        selectedBadge.classList.add('hidden');
+    }
+
+    function fillPatientDetails(select) {
+        const opt = select.options[select.selectedIndex];
+        if (opt.value) {
+            document.getElementById('p-name').value = opt.getAttribute('data-name');
+            document.getElementById('p-age').value = opt.getAttribute('data-age');
+            document.getElementById('p-gender').value = opt.getAttribute('data-gender');
+            document.getElementById('p-history').value = opt.getAttribute('data-history');
+        }
+    }
+
+    // Check query params for preset on load
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const preset = urlParams.get('preset');
+        if (preset) {
+            selectPreset(preset, preset.replace('.jpg', '').replace('sample_', '').toUpperCase());
+        }
+    });
+
+    // Form submit laser animation
+    diagnosisForm.addEventListener('submit', (e) => {
+        if (!fileInput.files.length && !presetFilename.value) {
+            e.preventDefault();
+            alert("Please upload a fundus photograph or pick a preset demo image to proceed!");
+            return;
+        }
+        scanLaser.classList.remove('hidden');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span class="animate-spin mr-2">⚙️</span> Processing Retinal Features & Grad-CAM...`;
+    });
+</script>
+{% endblock %}

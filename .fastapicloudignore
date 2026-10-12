@@ -1,0 +1,23 @@
+# FastAPI Cloud ignore rules
+.git/
+.gitignore
+.idea/
+.vscode/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+tests/
+test_images/
+database.sqlite
+app/static/uploads/*
+!app/static/uploads/.gitkeep
+app/static/reports/*
+!app/static/reports/.gitkeep
+*.log
+Dockerfile
+.dockerignore
+render.yaml
+build.sh

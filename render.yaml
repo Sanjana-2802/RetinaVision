@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: spectra-retina-ai
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: "bash build.sh"
+    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9

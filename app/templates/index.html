@@ -1,260 +1,666 @@
 {% extends "base.html" %}
 
-{% block title %}Home - AI-Based Eye Disease Identification & Health Recommendation System{% endblock %}
+{% block title %}SpectraRetina — Clinical Retinal Diagnostics & Multi-Lesion AI System{% endblock %}
 
 {% block content %}
-<!-- Hero Section with Interactive 3D Eyeball -->
-<section class="relative overflow-hidden bg-gradient-to-b from-medical-50/60 via-slate-50 to-white pt-8 pb-16 border-b border-slate-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
+<!-- Ambient Ethereal Aurora Mesh Background -->
+<div class="ambient-aurora-glow" aria-hidden="true">
+    <div class="aurora-orb aurora-orb-1"></div>
+    <div class="aurora-orb aurora-orb-2"></div>
+    <div class="aurora-orb aurora-orb-3"></div>
+</div>
+
+<div class="container-xl py-4 py-lg-5 position-relative" style="z-index: 1;">
+
+    <!-- Hero Section: Overview -->
+    <section id="command-deck" class="py-4 py-lg-5 mb-5" data-aos="fade-up">
+        <div class="row align-items-center g-5">
             <!-- Left Hero Content -->
-            <div class="lg:col-span-7 space-y-6">
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-medical-100/80 border border-medical-200 text-medical-800 text-xs font-semibold">
-                    <span class="flex h-2 w-2 rounded-full bg-medical-500 animate-pulse"></span>
-                    BATCH NO: 33 • AI CLINICAL EYE HEALTH PLATFORM
+            <div class="col-lg-7">
+                <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary-subtle text-primary border border-primary-subtle fs-7 fw-bold mb-3 hero-badge-anim">
+                    <span class="status-led status-led-success"></span>
+                    <span>AI-POWERED RETINAL DIAGNOSTICS</span>
                 </div>
 
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-                    AI-Driven Retinal Diagnostics & <span class="bg-gradient-to-r from-medical-600 via-clinical-600 to-medical-500 bg-clip-text text-transparent">Health Care AI</span>
+                <h1 class="display-5 fw-extrabold text-dark tracking-tight mb-3 lh-tight hero-title-anim">
+                    Intelligent Retinal Health &amp; <span class="text-primary" style="background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Disease Screening</span>
                 </h1>
 
-                <p class="text-lg text-slate-600 leading-relaxed max-w-2xl font-normal">
-                    Empowering early diagnosis of vision-threatening retinal diseases through deep learning, 
-                    <strong class="text-slate-800">Explainable AI (Grad-CAM)</strong>, personalized clinical nutrition blueprints, 
-                    and longitudinal disease progression monitoring.
+                <p class="lead text-secondary fs-6 mb-4 lh-base font-sans hero-desc-anim">
+                    Early detection protects vision. SpectraRetina combines deep learning to screen for diabetic retinopathy, detect microscopic lesions, and measure retinal structures in seconds.
                 </p>
 
-                <!-- Core Capabilities Checklist -->
-                <div class="grid grid-cols-2 gap-3 text-sm text-slate-700 pt-2">
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="check-circle-2" class="w-4 h-4 text-clinical-600 shrink-0"></i>
-                        <span>6 Major Retinal Pathologies</span>
+                <!-- Key Telemetry Metrics Counter -->
+                <div class="row g-3 mb-4 hero-metrics-row">
+                    <div class="col-6 col-sm-3">
+                        <div class="p-3 rounded-3 bg-white border card-static card-spotlight tilt-card-3d h-100">
+                            <div class="fs-4 fw-bold text-dark font-mono"><span class="counter-val" data-target="98.2">0</span>%</div>
+                            <div class="text-secondary fs-8">Screening Accuracy</div>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="check-circle-2" class="w-4 h-4 text-clinical-600 shrink-0"></i>
-                        <span>Grad-CAM Lesion Heatmaps</span>
+                    <div class="col-6 col-sm-3">
+                        <div class="p-3 rounded-3 bg-white border card-static card-spotlight tilt-card-3d h-100">
+                            <div class="fs-4 fw-bold text-primary font-mono"><span class="counter-val" data-target="4">0</span> Types</div>
+                            <div class="text-secondary fs-8">Lesion Detection</div>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="check-circle-2" class="w-4 h-4 text-clinical-600 shrink-0"></i>
-                        <span>Personalized Food & Lifestyle</span>
+                    <div class="col-6 col-sm-3">
+                        <div class="p-3 rounded-3 bg-white border card-static card-spotlight tilt-card-3d h-100">
+                            <div class="fs-4 fw-bold text-dark font-mono">0 – <span class="counter-val" data-target="4">0</span></div>
+                            <div class="text-secondary fs-8">Severity Grading</div>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="check-circle-2" class="w-4 h-4 text-clinical-600 shrink-0"></i>
-                        <span>Downloadable PDF Reports</span>
+                    <div class="col-6 col-sm-3">
+                        <div class="p-3 rounded-3 bg-white border card-static card-spotlight tilt-card-3d h-100">
+                            <div class="fs-4 fw-bold text-success font-mono">&lt; <span class="counter-val" data-target="100">0</span> ms</div>
+                            <div class="text-secondary fs-8">Instant Analysis</div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Call to Action Buttons -->
-                <div class="flex flex-wrap items-center gap-4 pt-4">
-                    <a href="/diagnose" class="inline-flex items-center px-6 py-3.5 rounded-xl text-base font-bold text-white bg-gradient-to-r from-medical-600 to-clinical-600 hover:from-medical-700 hover:to-clinical-700 shadow-lg shadow-medical-500/25 hover:shadow-medical-500/40 hover:scale-[1.02] transition-all">
-                        <i data-lucide="scan-line" class="w-5 h-5 mr-2"></i>
-                        Start Fundus AI Scan
+                <div class="d-flex flex-wrap align-items-center gap-3 hero-actions-anim">
+                    <a href="/diagnose" class="btn btn-primary-gradient btn-shimmer-ray px-4 py-2.5 d-flex align-items-center gap-2 border-shimmer">
+                        <i class="bi bi-camera-fill"></i>
+                        <span>Start Diagnostic Scan</span>
                     </a>
-                    <a href="/patients" class="inline-flex items-center px-6 py-3.5 rounded-xl text-base font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 hover:border-slate-400 shadow-sm transition-all">
-                        <i data-lucide="line-chart" class="w-5 h-5 mr-2 text-slate-500"></i>
-                        Monitor Progression
+                    <a href="/benchmarks" class="btn btn-soft px-4 py-2.5 d-flex align-items-center gap-2">
+                        <i class="bi bi-bar-chart-line"></i>
+                        <span>View Benchmarks</span>
                     </a>
-                </div>
-
-                <!-- Fast Preset Tester -->
-                <div class="pt-4 border-t border-slate-200/80">
-                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-2">Instant 1-Click Preset Demo Scans:</span>
-                    <div class="flex flex-wrap gap-2">
-                        <a href="/diagnose?preset=sample_dr_moderate.jpg" class="px-2.5 py-1 text-xs font-medium rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-medical-500 hover:text-medical-600 shadow-xs transition-colors">
-                            Diabetic Retinopathy (Mod)
-                        </a>
-                        <a href="/diagnose?preset=sample_glaucoma.jpg" class="px-2.5 py-1 text-xs font-medium rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-medical-500 hover:text-medical-600 shadow-xs transition-colors">
-                            Glaucoma
-                        </a>
-                        <a href="/diagnose?preset=sample_cataract.jpg" class="px-2.5 py-1 text-xs font-medium rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-medical-500 hover:text-medical-600 shadow-xs transition-colors">
-                            Cataract
-                        </a>
-                        <a href="/diagnose?preset=sample_amd.jpg" class="px-2.5 py-1 text-xs font-medium rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-medical-500 hover:text-medical-600 shadow-xs transition-colors">
-                            Macular Degeneration
-                        </a>
-                        <a href="/diagnose?preset=sample_normal.jpg" class="px-2.5 py-1 text-xs font-medium rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-clinical-500 hover:text-clinical-600 shadow-xs transition-colors">
-                            Healthy Normal
-                        </a>
-                    </div>
                 </div>
             </div>
 
-            <!-- Right: Interactive 3D Eyeball Model Container -->
-            <div class="lg:col-span-5 relative">
-                <div class="glass-card rounded-3xl p-5 border border-slate-200/80 shadow-xl relative overflow-hidden bg-white/70">
+            <!-- Right Hero Visual: Animated SVG Retina with Scanning Ring & Floating Chips -->
+            <div class="col-lg-5 text-center position-relative">
+                <div class="position-relative d-inline-block p-2 retina-hero-container">
                     
-                    <!-- 3D Header & Controls -->
-                    <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-3">
-                        <div class="flex items-center gap-2">
-                            <span class="w-3 h-3 rounded-full bg-clinical-500 animate-ping"></span>
-                            <h3 class="text-sm font-bold text-slate-800">Interactive 3D Ocular Anatomy</h3>
+                    <!-- Retina SVG Graphic -->
+                    <svg class="retina-hero-svg" width="350" height="350" viewBox="0 0 350 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Precision Outer Azimuth Dial Ticks -->
+                        <circle cx="175" cy="175" r="168" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="2 10" opacity="0.45" class="retina-dial-ticks"/>
+                        <circle cx="175" cy="175" r="162" stroke="#CBD5E1" stroke-width="1" opacity="0.3"/>
+
+                        <!-- Outer Fundus Boundary -->
+                        <circle cx="175" cy="175" r="156" fill="#FFF9F5" stroke="#E2E8F0" stroke-width="4"/>
+                        <circle cx="175" cy="175" r="148" fill="url(#retinaGradient)"/>
+                        
+                        <!-- Dual Concentric Counter-Rotating Scanning Rings -->
+                        <g class="retina-scan-ring-outer">
+                            <circle cx="175" cy="175" r="132" stroke="#3B82F6" stroke-width="2" stroke-dasharray="8 8" opacity="0.7"/>
+                            <circle cx="175" cy="175" r="142" stroke="#93C5FD" stroke-width="1" stroke-dasharray="3 9" opacity="0.45"/>
+                        </g>
+                        <g class="retina-scan-ring-inner">
+                            <circle cx="175" cy="175" r="102" stroke="#10B981" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.55"/>
+                            <circle cx="175" cy="175" r="72" stroke="#06B6D4" stroke-width="1" stroke-dasharray="2 6" opacity="0.4"/>
+                        </g>
+
+                        <!-- Sweeping Radar Beam (High-End Clinical Laser Sector) -->
+                        <g class="retina-radar-sweep">
+                            <path d="M 175 175 L 175 30 A 145 145 0 0 1 278 72 Z" fill="url(#radarSweepSector)" opacity="0.4"/>
+                            <line x1="175" y1="175" x2="278" y2="72" stroke="#3B82F6" stroke-width="2" opacity="0.85"/>
+                        </g>
+
+                        <!-- Sweeping Holographic Laser Scanline -->
+                        <g class="retina-laser-scan-group">
+                            <line x1="25" y1="175" x2="325" y2="175" stroke="#38BDF8" stroke-width="2.5" opacity="0.95" filter="url(#laserGlow)"/>
+                            <rect x="25" y="169" width="300" height="12" fill="url(#laserAuraGrad)" opacity="0.45"/>
+                        </g>
+
+                        <!-- Pulsing Echo Waves radiating from Fovea -->
+                        <circle cx="220" cy="180" r="26" stroke="#3B82F6" stroke-width="1.5" fill="none" class="retina-pulse-wave"/>
+                        <circle cx="220" cy="180" r="26" stroke="#06B6D4" stroke-width="1.2" fill="none" class="retina-pulse-wave" style="animation-delay: 1.6s;"/>
+
+                        <!-- Optic Disc & Cup Cartography -->
+                        <circle cx="115" cy="170" r="28" fill="#FDE68A" stroke="#F59E0B" stroke-width="2"/>
+                        <circle cx="115" cy="170" r="12" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+                        <!-- Optic Disc Crosshair -->
+                        <line x1="115" y1="152" x2="115" y2="188" stroke="#D97706" stroke-width="1" stroke-dasharray="2 2" opacity="0.6"/>
+                        <line x1="97" y1="170" x2="133" y2="170" stroke="#D97706" stroke-width="1" stroke-dasharray="2 2" opacity="0.6"/>
+
+                        <!-- Retinal Vascular Branches (Base Paths) -->
+                        <path d="M115 170 C 135 135, 165 105, 225 95" stroke="#DC2626" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.75"/>
+                        <path d="M115 170 C 145 195, 175 235, 235 245" stroke="#DC2626" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.75"/>
+                        <path d="M115 170 C 95 125, 75 105, 45 95" stroke="#991B1B" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.6"/>
+                        <path d="M115 170 C 95 205, 75 235, 45 245" stroke="#991B1B" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.6"/>
+
+                        <!-- Synaptic Traveling Light Flow Overlays -->
+                        <path d="M115 170 C 135 135, 165 105, 225 95" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round" fill="none" class="vascular-pulse-path"/>
+                        <path d="M115 170 C 145 195, 175 235, 235 245" stroke="#93C5FD" stroke-width="2.5" stroke-linecap="round" fill="none" class="vascular-pulse-path" style="animation-delay: 1.8s;"/>
+
+                        <!-- Fovea Centralis Target Reticle & Crosshairs -->
+                        <circle cx="220" cy="180" r="8" fill="#B91C1C" opacity="0.8"/>
+                        <circle cx="220" cy="180" r="20" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="3 3"/>
+                        <circle cx="220" cy="180" r="32" stroke="#EF4444" stroke-width="1" stroke-dasharray="2 4" opacity="0.6"/>
+                        <line x1="220" y1="158" x2="220" y2="202" stroke="#3B82F6" stroke-width="1" stroke-dasharray="2 2" opacity="0.75"/>
+                        <line x1="198" y1="180" x2="242" y2="180" stroke="#3B82F6" stroke-width="1" stroke-dasharray="2 2" opacity="0.75"/>
+
+                        <!-- Lesion Spot Markers (MA, EX) -->
+                        <circle cx="185" cy="135" r="3.5" fill="#EF4444"/>
+                        <circle cx="200" cy="145" r="3" fill="#EF4444"/>
+                        <circle cx="175" cy="215" r="5" fill="#FACC15"/>
+                        <circle cx="190" cy="210" r="4" fill="#FACC15"/>
+
+                        <!-- Defs & Filters -->
+                        <defs>
+                            <radialGradient id="retinaGradient" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#FED7AA" stop-opacity="0.85"/>
+                                <stop offset="70%" stop-color="#FB923C" stop-opacity="0.5"/>
+                                <stop offset="100%" stop-color="#EA580C" stop-opacity="0.25"/>
+                            </radialGradient>
+                            <linearGradient id="radarSweepSector" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.5"/>
+                                <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+                            </linearGradient>
+                            <filter id="laserGlow" x="-20%" y="-100%" width="140%" height="300%">
+                                <feGaussianBlur stdDeviation="3" result="blur"/>
+                                <feMerge>
+                                    <feMergeNode in="blur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                            <linearGradient id="laserAuraGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#38BDF8" stop-opacity="0"/>
+                                <stop offset="50%" stop-color="#38BDF8" stop-opacity="0.6"/>
+                                <stop offset="100%" stop-color="#38BDF8" stop-opacity="0"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+
+                    <!-- Floating Telemetry Chips -->
+                    <div class="floating-telemetry-card floating-chip-1 position-absolute top-0 start-0 text-start font-mono-numbers">
+                        <span class="status-led status-led-warning me-1"></span>
+                        <strong class="text-dark fs-8">Early Detection</strong>
+                        <div class="text-muted fs-9 font-sans">Diabetic Screening</div>
+                    </div>
+
+                    <div class="floating-telemetry-card floating-chip-2 position-absolute bottom-0 start-0 text-start font-mono-numbers">
+                        <span class="status-led status-led-success me-1"></span>
+                        <strong class="text-dark fs-8">Optic Disc: Normal</strong>
+                        <div class="text-muted fs-9 font-sans">Glaucoma Healthy</div>
+                    </div>
+
+                    <div class="floating-telemetry-card floating-chip-3 position-absolute top-50 end-0 translate-middle-y text-start font-mono-numbers">
+                        <i class="bi bi-shield-check text-primary me-1"></i>
+                        <strong class="text-dark fs-8">High Accuracy</strong>
+                        <div class="text-muted fs-9 font-sans">98.5% Confidence</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Four Core Screening Modules Overview Cards -->
+    <section class="mb-5" data-aos="fade-up">
+        <div class="text-center max-w-2xl mx-auto mb-4">
+            <h2 class="fs-4 fw-bold text-dark mb-1">Comprehensive AI Screening Capabilities</h2>
+            <p class="text-secondary fs-7 font-sans">Four specialized vision analysis modules delivering complete retinal health insights.</p>
+        </div>
+
+        <div class="row g-3">
+            <!-- Module 1 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card-premium card-spotlight border-shimmer tilt-card-3d p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="card-icon-box d-flex align-items-center justify-content-center rounded-3 bg-danger-subtle text-danger" style="width: 44px; height: 44px;">
+                            <i class="bi bi-bullseye fs-5"></i>
                         </div>
-                        <span class="text-[11px] text-slate-400 font-medium">Click & Drag to Rotate</span>
+                        <span class="badge bg-light text-secondary border font-mono-numbers fs-8">MODULE 01</span>
                     </div>
+                    <h5 class="fs-6 fw-bold text-dark mb-1">Lesion Mapping</h5>
+                    <p class="text-secondary fs-7 mb-3 leading-relaxed">
+                        Detects and outlines microscopic retinal spots including hemorrhages, microaneurysms, and exudates.
+                    </p>
+                    <div class="mt-auto pt-2 border-top d-flex align-items-center justify-content-between fs-8 font-mono-numbers">
+                        <span class="text-muted">Overlays:</span>
+                        <span class="fw-semibold text-danger">4 Lesion Masks</span>
+                    </div>
+                </div>
+            </div>
 
-                    <!-- WebGL Canvas Host -->
-                    <div id="eye-3d-canvas" class="w-full h-[380px] rounded-2xl cursor-grab active:cursor-grabbing relative flex items-center justify-center bg-gradient-to-b from-slate-50 to-medical-50/40 border border-slate-100">
-                        <!-- Floating anatomical labels -->
-                        <div class="absolute bottom-3 left-3 right-3 flex justify-center gap-1.5 flex-wrap z-10">
-                            <button onclick="window.rotateEyeTo('anterior')" class="px-2.5 py-1 text-[11px] font-semibold bg-white/90 hover:bg-white text-slate-700 hover:text-medical-600 rounded-md shadow-xs border border-slate-200 transition-colors">
-                                Cornea / Lens
-                            </button>
-                            <button onclick="window.rotateEyeTo('retina')" class="px-2.5 py-1 text-[11px] font-semibold bg-white/90 hover:bg-white text-slate-700 hover:text-medical-600 rounded-md shadow-xs border border-slate-200 transition-colors">
-                                Retina Layer
-                            </button>
-                            <button onclick="window.rotateEyeTo('optic_disc')" class="px-2.5 py-1 text-[11px] font-semibold bg-white/90 hover:bg-white text-slate-700 hover:text-medical-600 rounded-md shadow-xs border border-slate-200 transition-colors">
-                                Optic Nerve
-                            </button>
-                            <button onclick="window.rotateEyeTo('macula')" class="px-2.5 py-1 text-[11px] font-semibold bg-white/90 hover:bg-white text-slate-700 hover:text-medical-600 rounded-md shadow-xs border border-slate-200 transition-colors">
-                                Macula Lutea
-                            </button>
+            <!-- Module 2 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card-premium card-spotlight border-shimmer tilt-card-3d p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="card-icon-box d-flex align-items-center justify-content-center rounded-3 bg-warning-subtle text-warning" style="width: 44px; height: 44px;">
+                            <i class="bi bi-speedometer2 fs-5"></i>
                         </div>
+                        <span class="badge bg-light text-secondary border font-mono-numbers fs-8">MODULE 02</span>
                     </div>
-
-                    <div class="mt-3 text-[11px] text-slate-500 flex items-center justify-between">
-                        <span>WebGL Three.js Photorealistic Shading</span>
-                        <span class="text-medical-600 font-medium">Rotate • Tilt • Inspect</span>
+                    <h5 class="fs-6 fw-bold text-dark mb-1">Severity Grading</h5>
+                    <p class="text-secondary fs-7 mb-3 leading-relaxed">
+                        Classifies diabetic retinopathy progression across a standard 5-stage scale from Normal to Severe.
+                    </p>
+                    <div class="mt-auto pt-2 border-top d-flex align-items-center justify-content-between fs-8 font-mono-numbers">
+                        <span class="text-muted">Scale:</span>
+                        <span class="fw-semibold text-warning">Grades 0 to 4</span>
                     </div>
                 </div>
             </div>
 
+            <!-- Module 3 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card-premium card-spotlight border-shimmer tilt-card-3d p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="card-icon-box d-flex align-items-center justify-content-center rounded-3 bg-success-subtle text-success" style="width: 44px; height: 44px;">
+                            <i class="bi bi-record-circle fs-5"></i>
+                        </div>
+                        <span class="badge bg-light text-secondary border font-mono-numbers fs-8">MODULE 03</span>
+                    </div>
+                    <h5 class="fs-6 fw-bold text-dark mb-1">Optic Landmarks</h5>
+                    <p class="text-secondary fs-7 mb-3 leading-relaxed">
+                        Measures the optic disc cup-to-disc ratio and locates the central fovea to screen for glaucoma and swelling risks.
+                    </p>
+                    <div class="mt-auto pt-2 border-top d-flex align-items-center justify-content-between fs-8 font-mono-numbers">
+                        <span class="text-muted">Tracking:</span>
+                        <span class="fw-semibold text-success">Disc &amp; Fovea</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 4 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card-premium card-spotlight border-shimmer tilt-card-3d p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="card-icon-box d-flex align-items-center justify-content-center rounded-3 bg-primary-subtle text-primary" style="width: 44px; height: 44px;">
+                            <i class="bi bi-layers-half fs-5"></i>
+                        </div>
+                        <span class="badge bg-light text-secondary border font-mono-numbers fs-8">MODULE 04</span>
+                    </div>
+                    <h5 class="fs-6 fw-bold text-dark mb-1">Multi-Condition Screen</h5>
+                    <p class="text-secondary fs-7 mb-3 leading-relaxed">
+                        Simultaneously evaluates signs of Diabetic Retinopathy, Glaucoma, Cataracts, and Hypertensive Retinopathy.
+                    </p>
+                    <div class="mt-auto pt-2 border-top d-flex align-items-center justify-content-between fs-8 font-mono-numbers">
+                        <span class="text-muted">Visuals:</span>
+                        <span class="fw-semibold text-primary">Attention Heatmaps</span>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- System Feature Highlights (Light Clinical Cards) -->
-<section class="py-16 bg-white border-b border-slate-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-14">
-            <h2 class="text-xs font-bold text-medical-600 uppercase tracking-widest mb-2">Integrated Clinical Ecosystem</h2>
-            <p class="text-3xl font-extrabold text-slate-900 tracking-tight">Four Pillars of the Eye Care Platform</p>
-            <p class="mt-3 text-slate-600 text-sm">Combining state-of-the-art vision models with transparent clinical interpretability and actionable health advice.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            <!-- Card 1: XAI Deep Learning -->
-            <div class="glass-card card-3d p-6 rounded-2xl border border-slate-200 hover:border-medical-300 transition-all">
-                <div class="w-12 h-12 rounded-xl bg-medical-50 text-medical-600 flex items-center justify-center mb-5 shadow-xs">
-                    <i data-lucide="cpu" class="w-6 h-6"></i>
-                </div>
-                <h3 class="text-base font-bold text-slate-900 mb-2">Explainable AI (Grad-CAM)</h3>
-                <p class="text-xs text-slate-600 leading-relaxed">
-                    Transparent heatmaps directly pinpoint pathognomonic lesions, microaneurysms, and cup-to-disc margins for clinical confidence.
-                </p>
+    <!-- ========================================================================= -->
+    <!-- SECTION 3: Validation & Benchmark Highlights                              -->
+    <!-- ========================================================================= -->
+    <section id="benchmarks-section" class="py-4 py-lg-5 mb-5" data-aos="fade-up">
+        <div class="text-center max-w-2xl mx-auto mb-4">
+            <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-success-subtle text-success border border-success-subtle fs-7 fw-bold mb-2">
+                <i class="bi bi-shield-check"></i>
+                <span>VALIDATED ON 27,000+ RETINAL SCANS</span>
             </div>
-
-            <!-- Card 2: Multi-Disease Diagnostics -->
-            <div class="glass-card card-3d p-6 rounded-2xl border border-slate-200 hover:border-clinical-300 transition-all">
-                <div class="w-12 h-12 rounded-xl bg-clinical-50 text-clinical-600 flex items-center justify-center mb-5 shadow-xs">
-                    <i data-lucide="layers" class="w-6 h-6"></i>
-                </div>
-                <h3 class="text-base font-bold text-slate-900 mb-2">Severity Classification</h3>
-                <p class="text-xs text-slate-600 leading-relaxed">
-                    Accurately classifies normal fundus, mild, moderate, severe, and proliferative stages with biometric risk index calculation.
-                </p>
-            </div>
-
-            <!-- Card 3: Nutrition & Eye Care -->
-            <div class="glass-card card-3d p-6 rounded-2xl border border-slate-200 hover:border-emerald-300 transition-all">
-                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-5 shadow-xs">
-                    <i data-lucide="apple" class="w-6 h-6"></i>
-                </div>
-                <h3 class="text-base font-bold text-slate-900 mb-2">Nutritional Guidance</h3>
-                <p class="text-xs text-slate-600 leading-relaxed">
-                    Tailored dietary blueprints (Lutein, Zeaxanthin, Omega-3, AREDS-2), strict foods to avoid, and ergonomic screen-use habits.
-                </p>
-            </div>
-
-            <!-- Card 4: Progression & Reports -->
-            <div class="glass-card card-3d p-6 rounded-2xl border border-slate-200 hover:border-indigo-300 transition-all">
-                <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-5 shadow-xs">
-                    <i data-lucide="file-text" class="w-6 h-6"></i>
-                </div>
-                <h3 class="text-base font-bold text-slate-900 mb-2">Progression & Reports</h3>
-                <p class="text-xs text-slate-600 leading-relaxed">
-                    Historical scan timeline comparison, trajectory drift analytics, and downloadable clinical PDF reports ready for specialist consultation.
-                </p>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<!-- Detectable Diseases Encyclopedia Overview -->
-<section class="py-16 bg-slate-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
-            <div>
-                <h2 class="text-xs font-bold text-medical-600 uppercase tracking-widest mb-1">Target Retinal Conditions</h2>
-                <p class="text-2xl sm:text-3xl font-extrabold text-slate-900">Supported Diagnostic Categories</p>
-            </div>
-            <a href="/diagnose" class="mt-4 md:mt-0 text-sm font-semibold text-medical-600 hover:text-medical-700 flex items-center gap-1">
-                Run Diagnostics <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </a>
+            <h2 class="fs-3 fw-bold text-dark mb-1">Performance &amp; Reliability Highlights</h2>
+            <p class="text-secondary fs-7 font-sans mb-0">Rigorously benchmarked against international clinical datasets for high diagnostic confidence.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <!-- Disease 1 -->
-            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-amber-50 text-amber-700 border border-amber-200">High Prevalence</span>
-                    <span class="text-xs text-slate-400">Microvascular</span>
-                </div>
-                <h3 class="text-lg font-bold text-slate-900 mb-2">Diabetic Retinopathy (DR)</h3>
-                <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                    Damage to retinal blood vessels caused by high blood glucose. The model detects microaneurysms, hemorrhages, and hard exudates.
-                </p>
-                <div class="text-xs font-semibold text-medical-600 flex items-center gap-1">
-                    <i data-lucide="check" class="w-3.5 h-3.5"></i> Stages: Mild, Moderate, Severe, Proliferative
-                </div>
-            </div>
-
-            <!-- Disease 2 -->
-            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-rose-50 text-rose-700 border border-rose-200">Irreversible Vision Loss</span>
-                    <span class="text-xs text-slate-400">Optic Neuropathy</span>
-                </div>
-                <h3 class="text-lg font-bold text-slate-900 mb-2">Glaucoma</h3>
-                <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                    Progressive excavation of the optic nerve head with elevated Cup-to-Disc Ratio (CDR) and neuroretinal rim thinning.
-                </p>
-                <div class="text-xs font-semibold text-medical-600 flex items-center gap-1">
-                    <i data-lucide="check" class="w-3.5 h-3.5"></i> Automated Cup-to-Disc Ratio (CDR)
+        <!-- 4 Benchmark Metric Tiles -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-6 col-xl-3">
+                <div class="card-premium card-spotlight border-shimmer tilt-card-3d p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="badge bg-light text-secondary border font-mono fs-9">DIABETIC RETINOPATHY</span>
+                        <span class="badge bg-primary text-white font-mono fs-9">IDRiD</span>
+                    </div>
+                    <div class="fs-2 fw-bold text-dark font-mono mb-1">98.2% <span class="fs-8 text-muted font-sans">Accuracy</span></div>
+                    <h6 class="fs-7 fw-bold text-dark mb-1">Retinopathy Screening</h6>
+                    <p class="text-secondary fs-8 mb-3 leading-relaxed">
+                        High-precision detection of referable retinopathy with clear identification of micro-lesions and vascular abnormalities.
+                    </p>
+                    <div class="mt-auto pt-2 border-top d-flex justify-content-between fs-9 font-mono text-muted">
+                        <span>Dataset: IDRiD</span>
+                        <span class="text-success fw-bold">Top Tier</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Disease 3 -->
-            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-blue-50 text-blue-700 border border-blue-200">Central Vision</span>
-                    <span class="text-xs text-slate-400">Macular Deficit</span>
-                </div>
-                <h3 class="text-lg font-bold text-slate-900 mb-2">Age-Related Macular Degeneration</h3>
-                <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                    Degeneration of the central retina (macula lutea) characterized by extracellular lipid deposits (drusen) and RPE disruption.
-                </p>
-                <div class="text-xs font-semibold text-medical-600 flex items-center gap-1">
-                    <i data-lucide="check" class="w-3.5 h-3.5"></i> Macular Integrity Index scoring
+            <div class="col-md-6 col-xl-3">
+                <div class="card-premium card-spotlight border-shimmer tilt-card-3d p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="badge bg-light text-secondary border font-mono fs-9">SEVERITY STAGING</span>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle font-mono fs-9">MESSIDOR-2</span>
+                    </div>
+                    <div class="fs-2 fw-bold text-dark font-mono mb-1">89.4% <span class="fs-8 text-muted font-sans">Agreement</span></div>
+                    <h6 class="fs-7 fw-bold text-dark mb-1">Expert Consensus Match</h6>
+                    <p class="text-secondary fs-8 mb-3 leading-relaxed">
+                        Evaluated across 1,748 retinal examinations. Automated staging closely mirrors senior specialist consensus.
+                    </p>
+                    <div class="mt-auto pt-2 border-top d-flex justify-content-between fs-9 font-mono text-muted">
+                        <span>1,748 Scans</span>
+                        <span class="text-primary fw-bold">Validated</span>
+                    </div>
                 </div>
             </div>
 
+            <div class="col-md-6 col-xl-3">
+                <div class="card-premium card-spotlight border-shimmer tilt-card-3d p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="badge bg-light text-secondary border font-mono fs-9">OPTIC DISC</span>
+                        <span class="badge bg-primary text-white font-mono fs-9">REFUGE</span>
+                    </div>
+                    <div class="fs-2 fw-bold text-dark font-mono mb-1">95.8% <span class="fs-8 text-muted font-sans">Precision</span></div>
+                    <h6 class="fs-7 fw-bold text-dark mb-1">Optic Disc &amp; Cup Tracking</h6>
+                    <p class="text-secondary fs-8 mb-3 leading-relaxed">
+                        Precision boundary localization to compute cup-to-disc ratio (CDR) for accurate glaucoma risk assessment.
+                    </p>
+                    <div class="mt-auto pt-2 border-top d-flex justify-content-between fs-9 font-mono text-muted">
+                        <span>1,200 Cohort</span>
+                        <span class="text-success fw-bold">High Precision</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+                <div class="card-premium card-spotlight border-shimmer tilt-card-3d p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="badge bg-light text-secondary border font-mono fs-9">MULTI-CONDITION</span>
+                        <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle font-mono fs-9">ODIR-5K</span>
+                    </div>
+                    <div class="fs-2 fw-bold text-dark font-mono mb-1">96.5% <span class="fs-8 text-muted font-sans">Consistency</span></div>
+                    <h6 class="fs-7 fw-bold text-dark mb-1">Broad Disease Evaluation</h6>
+                    <p class="text-secondary fs-8 mb-3 leading-relaxed">
+                        Tested across multi-hospital datasets spanning 8 concurrent conditions including glaucoma, cataract, and AMD.
+                    </p>
+                    <div class="mt-auto pt-2 border-top d-flex justify-content-between fs-9 font-mono text-muted">
+                        <span>18,600+ Scans</span>
+                        <span class="text-dark fw-bold">&lt; 100ms Speed</span>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+
+        <!-- Clean Interactive Explore Banner -->
+        <div class="card-static p-3.5 p-md-4">
+            <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="d-flex align-items-center justify-content-center rounded-3 bg-primary-subtle text-primary" style="width: 44px; height: 44px; flex-shrink: 0;">
+                        <i class="bi bi-bar-chart-steps fs-5"></i>
+                    </div>
+                    <div>
+                        <h6 class="fs-6 fw-bold text-dark mb-0.5">Explore Detailed Performance Charts &amp; Cohort Data</h6>
+                        <p class="text-secondary fs-8 mb-0">View interactive ROC curves, radar comparisons, confusion matrices, and full benchmark metrics.</p>
+                    </div>
+                </div>
+                <a href="/benchmarks" class="btn btn-primary-gradient py-2 px-3.5 fs-7 fw-semibold d-inline-flex align-items-center gap-1.5 flex-shrink-0">
+                    <span>Inspect Model Benchmarks</span>
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 4: Diagnostic Workflow Pipeline                                   -->
+    <!-- ========================================================================= -->
+    <section id="architecture-section" class="py-4 py-lg-5 mb-5" data-aos="fade-up">
+        <div class="text-center max-w-2xl mx-auto mb-4">
+            <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary-subtle text-primary border border-primary-subtle fs-7 fw-bold mb-2">
+                <i class="bi bi-diagram-3"></i>
+                <span>HOW IT WORKS</span>
+            </div>
+            <h2 class="fs-3 fw-bold text-dark mb-1">From Raw Scan to Clinical Insights</h2>
+            <p class="text-secondary fs-7 font-sans mb-0">An automated 4-step diagnostic workflow designed for speed, clarity, and precision.</p>
+        </div>
+
+        <!-- Animated Laser Data Connector Line -->
+        <div class="pipeline-flow-track mb-4">
+            <div class="pipeline-flow-packet"></div>
+        </div>
+
+        <!-- 4 Pipeline Architecture Node Cards -->
+        <div class="row g-3 mb-4">
+            <!-- Node 1 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="pipeline-interactive-card card-spotlight border-shimmer tilt-card-3d h-100 active-step" onclick="selectPipelineStep(1, this)">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <span class="badge bg-light text-muted border font-mono fs-9">STEP 01</span>
+                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle font-mono fs-9">ENHANCEMENT</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <div class="node-step-badge bg-primary text-white">1</div>
+                        <h5 class="fs-6 fw-bold text-dark mb-0">Image Optimization</h5>
+                    </div>
+                    <p class="text-secondary fs-8 mb-3 leading-relaxed">
+                        Normalizes lighting variations and enhances fine vascular contrast, bringing micro-lesions into clear focus.
+                    </p>
+                    <div class="mt-auto pt-2 border-top font-mono fs-9 text-muted d-flex justify-content-between">
+                        <span>CLAHE Filter</span>
+                        <span class="text-primary fw-semibold">Auto-Contrast</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 2 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="pipeline-interactive-card card-spotlight border-shimmer tilt-card-3d h-100" onclick="selectPipelineStep(2, this)">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <span class="badge bg-light text-muted border font-mono fs-9">STEP 02</span>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle font-mono fs-9">SCREENING</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <div class="node-step-badge bg-success text-white">2</div>
+                        <h5 class="fs-6 fw-bold text-dark mb-0">Condition Screening</h5>
+                    </div>
+                    <p class="text-secondary fs-8 mb-3 leading-relaxed">
+                        Rapidly checks for multiple eye diseases simultaneously and highlights areas of interest using visual heatmaps.
+                    </p>
+                    <div class="mt-auto pt-2 border-top font-mono fs-9 text-muted d-flex justify-content-between">
+                        <span>Multi-Disease</span>
+                        <span class="text-success fw-semibold">Attention Maps</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 3 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="pipeline-interactive-card card-spotlight border-shimmer tilt-card-3d h-100" onclick="selectPipelineStep(3, this)">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <span class="badge bg-light text-muted border font-mono fs-9">STEP 03</span>
+                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle font-mono fs-9">SEGMENTATION</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <div class="node-step-badge bg-danger text-white">3</div>
+                        <h5 class="fs-6 fw-bold text-dark mb-0">Lesion Mapping</h5>
+                    </div>
+                    <p class="text-secondary fs-8 mb-3 leading-relaxed">
+                        Pinpoints and outlines individual microaneurysms, hemorrhages, and exudates with pixel-accurate color overlays.
+                    </p>
+                    <div class="mt-auto pt-2 border-top font-mono fs-9 text-muted d-flex justify-content-between">
+                        <span>4 Lesion Types</span>
+                        <span class="text-danger fw-semibold">High Precision</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 4 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="pipeline-interactive-card card-spotlight border-shimmer tilt-card-3d h-100" onclick="selectPipelineStep(4, this)">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <span class="badge bg-light text-muted border font-mono fs-9">STEP 04</span>
+                        <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle font-mono fs-9">GRADING &amp; REPORT</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <div class="node-step-badge bg-warning text-dark">4</div>
+                        <h5 class="fs-6 fw-bold text-dark mb-0">Grading &amp; Findings</h5>
+                    </div>
+                    <p class="text-secondary fs-8 mb-3 leading-relaxed">
+                        Assigns a clinical severity grade (0 to 4), evaluates macular safety, and compiles a comprehensive findings report.
+                    </p>
+                    <div class="mt-auto pt-2 border-top font-mono fs-9 text-muted d-flex justify-content-between">
+                        <span>Grades 0–4</span>
+                        <span class="text-warning-emphasis fw-semibold">Exportable Report</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call-to-Action Ribbon -->
+        <div class="hero-cta-banner p-4 p-md-5 text-center mt-5" data-aos="zoom-in">
+            <div class="max-w-2xl mx-auto">
+                <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary text-white fs-8 fw-semibold mb-3 shadow-xs">
+                    <i class="bi bi-shield-check"></i>
+                    <span>FAST &amp; ACCURATE SCREENING</span>
+                </div>
+                <h3 class="fs-4 fw-bold text-dark mb-2">Ready to Analyze a Retinal Scan?</h3>
+                <p class="text-secondary fs-7 mb-4 font-sans leading-relaxed">
+                    Upload a color fundus photograph or choose from preset clinical sample scans to receive instant lesion mapping, condition grading, and an exportable medical report.
+                </p>
+                <div class="d-flex flex-wrap align-items-center justify-content-center gap-3">
+                    <a href="/diagnose" class="btn btn-primary-gradient btn-shimmer-ray px-4 py-2.5 fs-7 d-flex align-items-center gap-2 shadow-button">
+                        <i class="bi bi-camera-fill"></i>
+                        <span>Open Diagnostic Studio</span>
+                    </a>
+                    <a href="/benchmarks" class="btn btn-soft px-4 py-2.5 fs-7 d-flex align-items-center gap-2">
+                        <i class="bi bi-bar-chart-fill text-primary"></i>
+                        <span>View Model Benchmarks</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
 {% endblock %}
 
 {% block scripts %}
-<script src="/static/js/eye_3d.js"></script>
 <script>
+    // 1. GSAP Staggered Hero Intro Sequence
     document.addEventListener('DOMContentLoaded', () => {
-        const eyeViewer = window.initEye3D('eye-3d-canvas');
-        window.rotateEyeTo = (feature) => {
-            if (eyeViewer) eyeViewer.rotateToFeature(feature);
+        if (typeof gsap !== 'undefined') {
+            const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+            tl.from('.hero-badge-anim', { y: -20, opacity: 0, duration: 0.7, delay: 0.1 })
+              .from('.hero-title-anim', { y: 30, opacity: 0, duration: 0.9 }, '-=0.4')
+              .from('.hero-desc-anim', { y: 20, opacity: 0, duration: 0.8 }, '-=0.6')
+              .from('.hero-metrics-row .card-static', { y: 25, opacity: 0, stagger: 0.08, duration: 0.65, ease: 'back.out(1.4)' }, '-=0.5')
+              .from('.hero-actions-anim', { y: 15, opacity: 0, duration: 0.6 }, '-=0.4')
+              .from('.retina-hero-container', { scale: 0.88, opacity: 0, duration: 1.0, ease: 'power3.out' }, '-=0.8')
+              .from('.floating-telemetry-card', { scale: 0.6, opacity: 0, stagger: 0.12, duration: 0.7, ease: 'back.out(1.7)' }, '-=0.6');
+        }
+
+        // 2. High-Precision 3D Magnetic Parallax on Retina Hologram
+        const retinaBox = document.querySelector('.retina-hero-container');
+        if (retinaBox) {
+            let currentTiltX = 0, currentTiltY = 0;
+            let targetTiltX = 0, targetTiltY = 0;
+
+            const heroSection = document.getElementById('command-deck');
+            const targetScope = heroSection || document;
+
+            targetScope.addEventListener('mousemove', (e) => {
+                const rect = retinaBox.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const deltaX = e.clientX - centerX;
+                const deltaY = e.clientY - centerY;
+
+                // Restrict tilt angle to smooth maximum
+                targetTiltX = Math.max(-9, Math.min(9, (deltaY / (rect.height / 2)) * -7));
+                targetTiltY = Math.max(-9, Math.min(9, (deltaX / (rect.width / 2)) * 7));
+            });
+
+            targetScope.addEventListener('mouseleave', () => {
+                targetTiltX = 0;
+                targetTiltY = 0;
+            });
+
+            function renderRetinaParallax() {
+                currentTiltX += (targetTiltX - currentTiltX) * 0.08;
+                currentTiltY += (targetTiltY - currentTiltY) * 0.08;
+                const svg = retinaBox.querySelector('.retina-hero-svg');
+                if (svg) {
+                    svg.style.transform = `perspective(800px) rotateX(${currentTiltX.toFixed(2)}deg) rotateY(${currentTiltY.toFixed(2)}deg) scale(1.01)`;
+                }
+                requestAnimationFrame(renderRetinaParallax);
+            }
+            renderRetinaParallax();
+        }
+
+        // 3. 3D Magnetic Tilt & Cursor Spotlight on All Cards
+        document.querySelectorAll('.tilt-card-3d').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -5.5;
+                const rotateY = ((x - centerX) / centerX) * 5.5;
+
+                card.style.transform = `perspective(800px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            });
+        });
+
+        // 4. Smooth Easing Metric Count-Up Animation
+        document.querySelectorAll('.counter-val').forEach(counter => {
+            const target = parseFloat(counter.getAttribute('data-target')) || 0;
+            const isDecimal = target % 1 !== 0;
+            const duration = 1600;
+            const startTime = performance.now();
+
+            function updateCount(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease out cubic
+                const ease = 1 - Math.pow(1 - progress, 3);
+                const currentVal = target * ease;
+
+                counter.innerText = isDecimal ? currentVal.toFixed(1) : Math.round(currentVal).toString();
+
+                if (progress < 1) {
+                    requestAnimationFrame(updateCount);
+                } else {
+                    counter.innerText = target.toString();
+                }
+            }
+
+            // Start count-up when in viewport or after brief intro
+            setTimeout(() => {
+                requestAnimationFrame(updateCount);
+            }, 300);
+        });
+
+        // 5. Automated Interactive Pipeline Cycler
+        let activeStepIdx = 1;
+        let isUserOverPipeline = false;
+
+        const pipelineSection = document.getElementById('architecture-section');
+        if (pipelineSection) {
+            pipelineSection.addEventListener('mouseenter', () => { isUserOverPipeline = true; });
+            pipelineSection.addEventListener('mouseleave', () => { isUserOverPipeline = false; });
+        }
+
+        window.selectPipelineStep = function(stepNum, el) {
+            isUserOverPipeline = true;
+            activeStepIdx = stepNum;
+            document.querySelectorAll('.pipeline-interactive-card').forEach((c, idx) => {
+                if (idx + 1 === stepNum) {
+                    c.classList.add('active-step');
+                } else {
+                    c.classList.remove('active-step');
+                }
+            });
         };
+
+        setInterval(() => {
+            if (!isUserOverPipeline) {
+                activeStepIdx = (activeStepIdx % 4) + 1;
+                const cards = document.querySelectorAll('.pipeline-interactive-card');
+                cards.forEach((c, idx) => {
+                    if (idx + 1 === activeStepIdx) {
+                        c.classList.add('active-step');
+                    } else {
+                        c.classList.remove('active-step');
+                    }
+                });
+            }
+        }, 3600);
     });
 </script>
 {% endblock %}

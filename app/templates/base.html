@@ -1,177 +1,307 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}AI Eye Disease Identification & Health Recommendation System{% endblock %}</title>
-    
-    <!-- Google Fonts -->
+    <title>{% block title %}SpectraRetina — Clinical Retinal Diagnostics & Multi-Lesion AI System{% endblock %}</title>
+
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS (CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        medical: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            200: '#bae6fd',
-                            300: '#7dd3fc',
-                            400: '#38bdf8',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            800: '#075985',
-                            900: '#0c4a6e',
-                        },
-                        clinical: {
-                            50: '#f0fdfa',
-                            100: '#ccfbf1',
-                            200: '#99f6e4',
-                            300: '#5eead4',
-                            400: '#2dd4bf',
-                            500: '#14b8a6',
-                            600: '#0d9488',
-                            700: '#0f766e',
-                            800: '#115e59',
-                            900: '#134e4a',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <!-- Three.js (for 3D Eyeball) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Chart.js (for Progression Monitoring) -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom Light Theme Styles -->
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- AOS (Animate on Scroll) CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+    <!-- Custom Clinical Master Stylesheet -->
     <link rel="stylesheet" href="/static/css/styles.css">
-    
+
+    <!-- Early Theme Loader Script (Avoids Flash of Unstyled Theme) -->
+    <script>
+        (function() {
+            try {
+                const savedTheme = localStorage.getItem('spectra_theme');
+                const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                }
+            } catch (e) {}
+        })();
+    </script>
+
+    {% block extra_head %}{% endblock %}
     {% block head %}{% endblock %}
 </head>
-<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased">
+<body>
 
-    <!-- Top Academic Accreditation Banner -->
+    <!-- Sticky Glass Navbar (Refined Clinical SaaS Workstation) -->
+    <nav class="navbar navbar-expand-lg glass-nav py-2.5">
+        <div class="container-xl">
+            <!-- Brand -->
+            <a class="navbar-brand d-flex align-items-center text-decoration-none" href="/" style="gap: 10px;">
+                <div class="brand-monogram">
+                    <i class="bi bi-eye-fill"></i>
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                    <span class="brand-title">Spectra<span class="text-primary">Retina</span></span>
+                    <span class="brand-subtitle">Retina AI Diagnostics</span>
+                </div>
+            </a>
 
-    <!-- Navigation Header -->
-    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <!-- Logo -->
-                <a href="/" class="flex items-center space-x-3 group">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-medical-600 to-clinical-500 flex items-center justify-center text-white shadow-md shadow-medical-500/20 group-hover:scale-105 transition-transform">
-                        <i data-lucide="eye" class="w-6 h-6"></i>
+            <!-- Mobile Hamburger -->
+            <button class="navbar-toggler border-0 shadow-none text-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list fs-3"></i>
+            </button>
+
+            <!-- Nav Links -->
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-1 font-sans">
+                    <li class="nav-item">
+                        <a class="nav-link nav-pill-link {% if active_page == 'home' %}active{% endif %}" href="/">
+                            <i class="bi bi-house-door"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-pill-link {% if active_page == 'diagnose' %}active{% endif %}" href="/diagnose">
+                            <i class="bi bi-activity"></i>
+                            <span>Diagnostic Studio</span>
+                        </a>
+                    </li>
+                    <!-- More Section Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link nav-pill-link dropdown-toggle {% if active_page in ['benchmarks', 'about'] %}active{% endif %}" href="#" id="moreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-grid"></i>
+                            <span>More</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end glass-dropdown border-0" aria-labelledby="moreDropdown">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center justify-content-between {% if active_page == 'benchmarks' %}active{% endif %}" href="/benchmarks">
+                                    <div class="d-flex align-items-center gap-2.5">
+                                        <div class="dropdown-icon-box bg-primary-subtle text-primary">
+                                            <i class="bi bi-bar-chart-fill"></i>
+                                        </div>
+                                        <div>
+                                            <div class="drop-item-title fw-bold fs-7">Model Benchmarks</div>
+                                            <small class="drop-item-subtitle d-block fs-8">SOTA metrics & validation cohorts</small>
+                                        </div>
+                                    </div>
+                                    <i class="bi bi-chevron-right drop-item-arrow fs-8"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center justify-content-between {% if active_page == 'about' %}active{% endif %}" href="/about">
+                                    <div class="d-flex align-items-center gap-2.5">
+                                        <div class="dropdown-icon-box bg-info-subtle text-info">
+                                            <i class="bi bi-cpu-fill"></i>
+                                        </div>
+                                        <div>
+                                            <div class="drop-item-title fw-bold fs-7">System Architecture</div>
+                                            <small class="drop-item-subtitle d-block fs-8">AI pipeline & technical workflow</small>
+                                        </div>
+                                    </div>
+                                    <i class="bi bi-chevron-right drop-item-arrow fs-8"></i>
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider my-1.5 opacity-10"></li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center justify-content-between" href="/docs" target="_blank">
+                                    <div class="d-flex align-items-center gap-2.5">
+                                        <div class="dropdown-icon-box bg-secondary-subtle text-secondary">
+                                            <i class="bi bi-code-slash"></i>
+                                        </div>
+                                        <div>
+                                            <div class="drop-item-title fw-bold fs-7">REST API Docs</div>
+                                            <small class="drop-item-subtitle d-block fs-8">FastAPI interactive Swagger UI</small>
+                                        </div>
+                                    </div>
+                                    <i class="bi bi-box-arrow-up-right drop-item-arrow fs-9"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- Telemetry Status, Theme Toggle & Direct Action -->
+                <div class="d-flex align-items-center gap-2 font-sans">
+                    <!-- Clean AI Status Pill -->
+                    <div class="d-none d-md-flex align-items-center gap-2 px-2.5 py-1 rounded-pill engine-status-pill font-mono fs-8">
+                        <span class="status-led status-led-success"></span>
+                        <span class="fw-semibold">AI Ready</span>
                     </div>
-                    <div>
-                        <div class="text-lg font-bold tracking-tight text-slate-900 flex items-center gap-1.5">
-                            Retina<span class="text-medical-600">Care</span> AI
-                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-clinical-50 text-clinical-700 border border-clinical-200">XAI V2.0</span>
-                        </div>
-                        <p class="text-[10px] text-slate-500 font-medium tracking-wide">Clinical Deep Learning Diagnostics</p>
-                    </div>
-                </a>
 
-                <!-- Desktop Navigation Links -->
-                <nav class="hidden md:flex items-center space-x-1">
-                    <a href="/" class="px-3.5 py-2 rounded-lg text-sm font-medium transition-colors {% if active_page == 'home' %}text-medical-600 bg-medical-50 font-semibold{% else %}text-slate-600 hover:text-medical-600 hover:bg-slate-100{% endif %}">
-                        <span class="flex items-center gap-1.5"><i data-lucide="home" class="w-4 h-4"></i> Home</span>
-                    </a>
-                    <a href="/diagnose" class="px-3.5 py-2 rounded-lg text-sm font-medium transition-colors {% if active_page == 'diagnose' %}text-medical-600 bg-medical-50 font-semibold{% else %}text-slate-600 hover:text-medical-600 hover:bg-slate-100{% endif %}">
-                        <span class="flex items-center gap-1.5"><i data-lucide="scan-line" class="w-4 h-4"></i> AI Diagnosis</span>
-                    </a>
-                    <a href="/patients" class="px-3.5 py-2 rounded-lg text-sm font-medium transition-colors {% if active_page == 'patients' %}text-medical-600 bg-medical-50 font-semibold{% else %}text-slate-600 hover:text-medical-600 hover:bg-slate-100{% endif %}">
-                        <span class="flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> Patients & History</span>
-                    </a>
-                    <a href="/hospitals" class="px-3.5 py-2 rounded-lg text-sm font-medium transition-colors {% if active_page == 'hospitals' %}text-medical-600 bg-medical-50 font-semibold{% else %}text-slate-600 hover:text-medical-600 hover:bg-slate-100{% endif %}">
-                        <span class="flex items-center gap-1.5"><i data-lucide="hospital" class="w-4 h-4"></i> Eye Specialists</span>
-                    </a>
-                    <a href="/about" class="px-3.5 py-2 rounded-lg text-sm font-medium transition-colors {% if active_page == 'about' %}text-medical-600 bg-medical-50 font-semibold{% else %}text-slate-600 hover:text-medical-600 hover:bg-slate-100{% endif %}">
-                        <span class="flex items-center gap-1.5"><i data-lucide="info" class="w-4 h-4"></i> About Project</span>
-                    </a>
-                </nav>
+                    <!-- Dark Mode Toggle Button -->
+                    <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle theme" title="Toggle theme (Light / Dark)">
+                        <i class="bi bi-moon-stars-fill theme-icon-dark"></i>
+                        <i class="bi bi-sun-fill theme-icon-light"></i>
+                    </button>
 
-                <!-- Quick Action Button -->
-                <div class="flex items-center space-x-3">
-                    <a href="/diagnose" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-semibold rounded-xl shadow-sm text-white bg-gradient-to-r from-medical-600 to-clinical-600 hover:from-medical-700 hover:to-clinical-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-medical-500 transition-all hover:shadow-md hover:scale-[1.02]">
-                        <i data-lucide="sparkles" class="w-4 h-4 mr-2"></i>
-                        New Scan
+                    <!-- New Scan Intake CTA -->
+                    <a href="/diagnose" class="btn btn-primary-gradient py-1.5 px-3 fs-7 fw-semibold d-flex align-items-center gap-1.5">
+                        <i class="bi bi-plus-lg"></i>
+                        <span>New Scan</span>
                     </a>
                 </div>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <!-- Main Content Area -->
-    <main class="flex-1">
+    <!-- Main Content Block -->
+    <main class="flex-grow-1">
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 mt-16 py-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <div class="md:col-span-2">
-                    <div class="flex items-center space-x-2 mb-3">
-                        <div class="w-8 h-8 rounded-lg bg-medical-600 flex items-center justify-center text-white">
-                            <i data-lucide="eye" class="w-5 h-5"></i>
+    <!-- Medical AI Workstation Footer -->
+    <footer class="bg-white border-top py-4 mt-auto text-secondary" style="font-size: 0.8125rem;">
+        <div class="container-xl">
+            <div class="row g-4 mb-3">
+                <div class="col-lg-4">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <div class="d-flex align-items-center justify-content-center rounded-2 bg-primary text-white" style="width: 26px; height: 26px;">
+                            <i class="bi bi-eye-fill" style="font-size: 0.8rem;"></i>
                         </div>
-                        <span class="text-base font-bold text-slate-900">RetinaCare AI</span>
+                        <span class="fw-bold text-dark fs-6">SpectraRetina Pro</span>
                     </div>
-                    <p class="text-sm text-slate-600 max-w-md leading-relaxed mb-4">
-                        Advanced AI and Deep Learning platform for retinal fundus disease identification, Explainable AI (Grad-CAM), severity classification, personalized nutrition regimens, and patient progression monitoring.
+                    <p class="text-secondary mb-2 leading-relaxed" style="font-size: 0.8125rem;">
+                        Autonomous multi-lesion segmentation, 5-stage DR severity categorization, optic landmark tracking, and multi-disease screening from color fundus photography.
                     </p>
-                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-lg text-xs text-slate-700 font-medium">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        Deep Learning Model Active (Torch CPU/CUDA)
+                    <div class="text-muted font-mono" style="font-size: 0.72rem;">
+                        PyTorch 2.4 • GhostNet • ConvNeXt • Attention U-Net
                     </div>
                 </div>
 
-                <div>
-                    <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">Project Modules</h4>
-                    <ul class="space-y-2 text-sm text-slate-600">
-                        <li><a href="/diagnose" class="hover:text-medical-600 transition-colors">Fundus Disease Detection</a></li>
-                        <li><a href="/diagnose" class="hover:text-medical-600 transition-colors">Explainable AI (Grad-CAM)</a></li>
-                        <li><a href="/patients" class="hover:text-medical-600 transition-colors">Patient Progression Tracker</a></li>
-                        <li><a href="/hospitals" class="hover:text-medical-600 transition-colors">Eye Specialist Referral</a></li>
+                <div class="col-sm-6 col-lg-2">
+                    <h6 class="text-dark fw-bold mb-2 fs-7 text-uppercase tracking-wider">Clinical Jobs</h6>
+                    <ul class="list-unstyled mb-0 d-flex flex-column gap-1.5 fs-7">
+                        <li><a href="/diagnose" class="text-decoration-none text-secondary">1. Disease Screening</a></li>
+                        <li><a href="/diagnose" class="text-decoration-none text-secondary">2. Severity Staging</a></li>
+                        <li><a href="/diagnose" class="text-decoration-none text-secondary">3. Lesion Segmentation</a></li>
+                        <li><a href="/diagnose" class="text-decoration-none text-secondary">4. Landmark Tracking</a></li>
                     </ul>
                 </div>
 
+                <div class="col-sm-6 col-lg-3">
+                    <h6 class="text-dark fw-bold mb-2 fs-7 text-uppercase tracking-wider">Clinical Benchmarks</h6>
+                    <ul class="list-unstyled mb-0 d-flex flex-column gap-1.5 fs-7">
+                        <li><a href="/benchmarks#idrid" class="text-decoration-none text-secondary">IDRiD (Lesions &amp; DR)</a></li>
+                        <li><a href="/benchmarks#messidor" class="text-decoration-none text-secondary">Messidor-2 (Referable DR)</a></li>
+                        <li><a href="/benchmarks#ddr" class="text-decoration-none text-secondary">DDR (13K Fundus Images)</a></li>
+                        <li><a href="/benchmarks#refuge" class="text-decoration-none text-secondary">REFUGE (Optic Disc &amp; Cup)</a></li>
+                    </ul>
+                </div>
 
+                <div class="col-lg-3">
+                    <h6 class="text-dark fw-bold mb-2 fs-7 text-uppercase tracking-wider">Safety &amp; Compliance</h6>
+                    <p class="text-secondary fs-7 mb-2 leading-relaxed">
+                        Class II SaMD algorithmic reference aid. Designed to augment certified ophthalmologist diagnosis and streamline telemedicine triage.
+                    </p>
+                    <div class="d-flex align-items-center gap-2 fs-8 font-mono text-muted">
+                        <span class="badge bg-light text-secondary border">ICDR 2002</span>
+                        <span class="badge bg-light text-secondary border">ETDRS GRID</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="border-t border-slate-200 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-2">
-                <div>
-                    © 2026 AI-Based Eye Disease Identification and Health Recommendation System. Designed for Clinical Research.
-                </div>
-                <div class="flex items-center space-x-4">
-                    <span class="text-slate-400">Light Theme Certified</span>
-                    <span>•</span>
-                    <a href="/about" class="hover:text-medical-600 transition-colors">Documentation</a>
+            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between pt-3 border-top text-muted fs-8 font-mono">
+                <div>&copy; 2026 SpectraRetina Systems. All rights reserved.</div>
+                <div class="d-flex align-items-center gap-3">
+                    <a href="/docs" class="text-decoration-none text-muted">API Docs</a>
+                    <a href="/benchmarks" class="text-decoration-none text-muted">Metrics</a>
+                    <a href="/about" class="text-decoration-none text-muted">Architecture</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Initialize Lucide Icons -->
+    <!-- Toast Notification Container for Export Actions -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1090;">
+        <div id="exportToast" class="toast align-items-center text-bg-light border shadow-sm" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body d-flex align-items-center gap-2 fs-7">
+                    <i class="bi bi-check-circle-fill text-success fs-6"></i>
+                    <span id="exportToastMessage">Action completed successfully.</span>
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5.3 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- KaTeX JS & auto-render -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '\\(', right: '\\)', display: false}]});"></script>
+
+    <!-- Global App Scripts -->
     <script>
-        lucide.createIcons();
+        // Initialize AOS
+        AOS.init({
+            duration: 550,
+            easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+            once: true
+        });
+
+        // Global Toast Trigger Utility
+        function showNotificationToast(msg) {
+            const toastEl = document.getElementById('exportToast');
+            const toastMsg = document.getElementById('exportToastMessage');
+            if (toastEl && toastMsg) {
+                toastMsg.innerText = msg;
+                const toast = new bootstrap.Toast(toastEl, { delay: 3500 });
+                toast.show();
+            }
+        }
+
+        // Theme Toggle Handler (Light / Dark Mode)
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                try {
+                    localStorage.setItem('spectra_theme', newTheme);
+                } catch (e) {}
+                window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: newTheme } }));
+            });
+        }
+
+        // Navbar Scroll Shadow
+        const navEl = document.querySelector('.glass-nav');
+        if (navEl) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 15) {
+                    navEl.classList.add('scrolled');
+                } else {
+                    navEl.classList.remove('scrolled');
+                }
+            }, { passive: true });
+        }
     </script>
 
+    {% block extra_scripts %}{% endblock %}
     {% block scripts %}{% endblock %}
 </body>
 </html>

@@ -36,3 +36,10 @@ htmlcov/
 
 .fastapicloud/
 app/database/*.db
+database.sqlite
+app/static/uploads/*
+!app/static/uploads/.gitkeep
+app/static/reports/*
+!app/static/reports/.gitkeep
+test_images/
+

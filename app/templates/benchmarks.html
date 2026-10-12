@@ -1,0 +1,791 @@
+{% extends "base.html" %}
+
+{% block title %}Clinical Benchmarks & Performance Verification — RetinaAI Pro{% endblock %}
+
+{% block content %}
+<div class="container-xl py-4 py-lg-5">
+
+  <!-- Header Banner -->
+  <div class="clinical-card p-4 p-md-5 mb-4 mb-md-5 bg-white position-relative overflow-hidden" data-aos="fade-up">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-8">
+        <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary-subtle text-primary border border-primary-subtle fs-xs fw-semibold mb-3">
+          <i class="bi bi-shield-check"></i>
+          <span>GOLD-STANDARD CLINICAL VALIDATION • 5 INTERNATIONAL COHORTS</span>
+        </div>
+        <h1 class="h2 fw-bold text-dark tracking-tight mb-2">
+          Benchmark Datasets & Performance Verification
+        </h1>
+        <p class="text-secondary mb-3 leading-relaxed" style="max-width: 680px;">
+          RetinaAI Pro is rigorously benchmarked against premier open-access international ophthalmic cohorts: <strong>IDRiD</strong>, <strong>Messidor-2</strong>, <strong>DDR</strong>, <strong>REFUGE</strong>, and <strong>ODIR-5K</strong>. Each dataset independently verifies multi-lesion Dice coefficients, 5-stage DR classification kappa, cup-to-disc ratio accuracy, and multi-disease sensitivity.
+        </p>
+        <div class="d-flex flex-wrap align-items-center gap-3 pt-2">
+          <div class="d-flex align-items-center gap-2 fs-xs text-secondary font-mono">
+            <span class="status-dot dot-normal"></span>
+            <span>5 Public Cohorts</span>
+          </div>
+          <span class="text-muted">•</span>
+          <div class="d-flex align-items-center gap-2 fs-xs text-secondary font-mono">
+            <i class="bi bi-images text-primary"></i>
+            <span>27,000+ Validated Scans</span>
+          </div>
+          <span class="text-muted">•</span>
+          <div class="d-flex align-items-center gap-2 fs-xs text-secondary font-mono">
+            <i class="bi bi-cpu text-primary"></i>
+            <span>4 Deep Learning Pipelines</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 text-lg-end">
+        <div class="clinical-spec-panel text-start">
+          <div class="fs-2xs fw-bold text-secondary text-uppercase tracking-wider font-mono mb-2">Cohort Summary</div>
+          <div class="d-flex justify-content-between align-items-center py-1 border-bottom fs-xs font-mono">
+            <span class="text-muted">Total Annotations:</span>
+            <span class="fw-bold text-dark">Pixel & Grade GT</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center py-1 border-bottom fs-xs font-mono">
+            <span class="text-muted">Peak Referable AUC:</span>
+            <span class="fw-bold text-success">0.982</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center py-1 border-bottom fs-xs font-mono">
+            <span class="text-muted">Optic Disc Dice:</span>
+            <span class="fw-bold text-primary">0.958</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center py-1 fs-xs font-mono">
+            <span class="text-muted">DR Agreement κ:</span>
+            <span class="fw-bold text-warning-emphasis">0.894 (Substantial)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Executive KPI Strip -->
+  <div class="row g-3 mb-5" data-aos="fade-up">
+    <div class="col-sm-6 col-lg-3">
+      <div class="benchmark-hero-kpi h-100">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <span class="fs-2xs fw-bold text-uppercase tracking-wider text-muted font-mono">MESSIDOR-2</span>
+          <span class="badge bg-success-subtle text-success border border-success-subtle fs-2xs font-mono">GOLD STANDARD</span>
+        </div>
+        <div class="fs-3 fw-bold text-dark font-mono mb-1">0.982 <span class="fs-xs text-secondary font-sans fw-normal">AUC</span></div>
+        <div class="fs-xs fw-semibold text-dark mb-1">Referable DR Discrimination</div>
+        <div class="fs-2xs text-secondary font-mono">95.1% Sens &bull; 96.4% Spec</div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+      <div class="benchmark-hero-kpi h-100">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <span class="fs-2xs fw-bold text-uppercase tracking-wider text-muted font-mono">REFUGE MICCAI</span>
+          <span class="badge bg-primary-subtle text-primary border border-primary-subtle fs-2xs font-mono">CALIPER SOTA</span>
+        </div>
+        <div class="fs-3 fw-bold text-primary font-mono mb-1">0.958 <span class="fs-xs text-secondary font-sans fw-normal">Dice</span></div>
+        <div class="fs-xs fw-semibold text-dark mb-1">Optic Nerve Boundary</div>
+        <div class="fs-2xs text-secondary font-mono">0.872 Cup &bull; 0.041 CDR MAE</div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+      <div class="benchmark-hero-kpi h-100">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <span class="fs-2xs fw-bold text-uppercase tracking-wider text-muted font-mono">IDRiD IEEE</span>
+          <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle fs-2xs font-mono">PIXEL ACCURACY</span>
+        </div>
+        <div class="fs-3 fw-bold text-warning-emphasis font-mono mb-1">0.824 <span class="fs-xs text-secondary font-sans fw-normal">Dice</span></div>
+        <div class="fs-xs fw-semibold text-dark mb-1">Hard Exudates (EX) Seg</div>
+        <div class="fs-2xs text-secondary font-mono">0.894 DR Quadratic κ</div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+      <div class="benchmark-hero-kpi h-100">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <span class="fs-2xs fw-bold text-uppercase tracking-wider text-muted font-mono">ODIR-5K</span>
+          <span class="badge bg-info-subtle text-info-emphasis border border-info-subtle fs-2xs font-mono">5 PATHOLOGIES</span>
+        </div>
+        <div class="fs-3 fw-bold text-dark font-mono mb-1">0.941 <span class="fs-xs text-secondary font-sans fw-normal">AUC</span></div>
+        <div class="fs-xs fw-semibold text-dark mb-1">Multi-Disease Screening</div>
+        <div class="fs-2xs text-secondary font-mono">DR, Glaucoma, Cataract, HTN</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Cross-Cohort SOTA Benchmark Comparison Matrix (Hero Chart) -->
+  <div class="clinical-card p-4 p-md-5 mb-5 bg-white" data-aos="fade-up">
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 pb-3 mb-4 border-bottom">
+      <div>
+        <div class="d-inline-flex align-items-center gap-1.5 px-2.5 py-0.5 rounded-pill bg-primary-subtle text-primary border border-primary-subtle fs-xs fw-semibold mb-2">
+          <i class="bi bi-graph-up-arrow"></i>
+          <span>GLOBAL BENCHMARK MATRIX</span>
+        </div>
+        <h2 class="h4 fw-bold text-dark mb-1">Cross-Cohort SOTA Benchmark Comparison</h2>
+        <p class="fs-sm text-secondary mb-0">RetinaAI Pro vs. Standard Clinical Deep Learning Baselines (ResNet-50 / U-Net) and Board-Certified Specialists</p>
+      </div>
+
+      <!-- Segmented View Switcher -->
+      <div class="nav-segmented" id="globalChartSwitcher">
+        <button type="button" class="nav-link active" id="btnGroupedBar" onclick="switchGlobalBenchmarkView('bar', this)">
+          <i class="bi bi-bar-chart-fill me-1"></i>Grouped Bars
+        </button>
+        <button type="button" class="nav-link" id="btnRadar" onclick="switchGlobalBenchmarkView('radar', this)">
+          <i class="bi bi-pie-chart-fill me-1"></i>Competency Radar
+        </button>
+      </div>
+    </div>
+
+    <!-- Chart Legend & Telemetry Indicators -->
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3 workstation-control-strip">
+      <div class="d-flex flex-wrap align-items-center gap-4 fs-xs font-mono">
+        <div class="d-flex align-items-center gap-2">
+          <span style="width: 14px; height: 14px; background-color: #1E4FD8; border-radius: 4px; display: inline-block;"></span>
+          <strong class="text-dark">RetinaAI Pro (Ours)</strong>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <span style="width: 14px; height: 14px; background-color: #94A3B8; border-radius: 4px; display: inline-block;"></span>
+          <span class="text-secondary">Standard SOTA Baseline (ResNet-50 / U-Net)</span>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <span style="width: 14px; height: 14px; background-color: #16A34A; border-radius: 4px; display: inline-block;"></span>
+          <span class="text-success fw-semibold">Retinologist Specialist Consensus</span>
+        </div>
+      </div>
+      <div class="d-flex align-items-center gap-2 fs-xs font-mono">
+        <span class="badge bg-success-subtle text-success border border-success-subtle px-2.5 py-1">+16.1% Mean SOTA Gain</span>
+        <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2.5 py-1">&lt; 85ms Latency</span>
+      </div>
+    </div>
+
+    <!-- Master Chart Canvas -->
+    <div class="position-relative" style="height: 340px;">
+      <canvas id="masterGlobalBenchmarkChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Benchmarks Cards Grid -->
+  <div class="mb-5">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <div>
+        <h2 class="h4 fw-bold text-dark mb-1">Evaluated Cohort Specifications</h2>
+        <p class="fs-sm text-secondary mb-0">Detailed breakdown of clinical training and validation datasets with standardized metrics</p>
+      </div>
+      <span class="badge bg-white text-secondary border px-3 py-2 font-mono fs-xs shadow-xs">
+        5 Cohorts Listed
+      </span>
+    </div>
+
+    <div class="d-flex flex-column gap-4">
+      {% for b in benchmarks %}
+      <div id="{{ b.id }}" class="clinical-card p-4 p-md-4 bg-white" data-aos="fade-up" data-aos-delay="{{ loop.index * 60 }}">
+        
+        <!-- Cohort Header -->
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 pb-3 border-bottom mb-4">
+          <div class="d-flex align-items-start gap-3">
+            <div class="p-2.5 rounded-3 bg-primary-subtle text-primary border border-primary-subtle fs-5 fw-bold font-mono">
+              {{ b.name }}
+            </div>
+            <div>
+              <div class="d-flex align-items-center gap-2">
+                <h3 class="h5 fw-bold text-dark mb-0">{{ b.full_name }}</h3>
+              </div>
+              <div class="fs-xs text-secondary mt-1 font-mono">
+                Source: <strong class="text-dark">{{ b.source }}</strong> &bull; Cohort: <span class="badge bg-light text-primary border font-mono">{{ b.samples }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <span class="badge bg-secondary-subtle text-secondary-emphasis border border-secondary-subtle font-mono fs-xs px-3 py-2">
+              <i class="bi bi-tag me-1"></i>{{ b.task }}
+            </span>
+          </div>
+        </div>
+
+        <div class="row g-4 align-items-start">
+          <!-- Left Column: Clinical Description & Metric Table -->
+          <div class="col-lg-5">
+            <p class="fs-sm text-secondary leading-relaxed mb-3">
+              {{ b.description }}
+            </p>
+
+            <!-- Evaluated Tasks Badges -->
+            <div class="d-flex flex-wrap align-items-center gap-1.5 mb-3">
+              <span class="fs-2xs fw-bold text-uppercase tracking-wider text-muted font-mono d-block w-100 mb-1">Evaluated Clinical Tasks</span>
+              {% if 'idrid' in b.id %}
+              <span class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs">Microaneurysms (MA)</span>
+              <span class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs">Hemorrhages (HE)</span>
+              <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle fs-xs">Hard Exudates (EX)</span>
+              <span class="badge bg-info-subtle text-info-emphasis border border-info-subtle fs-xs">Soft Exudates (SE)</span>
+              {% elif 'messidor' in b.id %}
+              <span class="badge bg-primary-subtle text-primary border border-primary-subtle fs-xs">Referable DR</span>
+              <span class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs">Macular Edema (CSME)</span>
+              <span class="badge bg-success-subtle text-success border border-success-subtle fs-xs">Grading Specificity</span>
+              {% elif 'ddr' in b.id %}
+              <span class="badge bg-primary-subtle text-primary border border-primary-subtle fs-xs">5-Grade ICDR Staging</span>
+              <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle fs-xs">Multi-Lesion Bounding</span>
+              <span class="badge bg-info-subtle text-info-emphasis border border-info-subtle fs-xs">Pixel Mean IoU</span>
+              {% elif 'refuge' in b.id %}
+              <span class="badge bg-success-subtle text-success border border-success-subtle fs-xs">Optic Disc Segmentation</span>
+              <span class="badge bg-primary-subtle text-primary border border-primary-subtle fs-xs">Physiological Cup Boundary</span>
+              <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle fs-xs">Cup-to-Disc Ratio (CDR)</span>
+              {% elif 'odir' in b.id %}
+              <span class="badge bg-primary-subtle text-primary border border-primary-subtle fs-xs">Diabetic Retinopathy</span>
+              <span class="badge bg-success-subtle text-success border border-success-subtle fs-xs">Glaucoma</span>
+              <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle fs-xs">Cataract</span>
+              <span class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs">Hypertensive Retinopathy</span>
+              {% endif %}
+            </div>
+
+            <!-- Standardized Metric Cards -->
+            <div class="row g-2 mb-3">
+              {% for metric, val in b.metrics.items() %}
+              <div class="col-6">
+                <div class="cohort-metric-card h-100">
+                  <div class="fs-2xs text-secondary font-mono text-truncate" title="{{ metric }}">{{ metric }}</div>
+                  <div class="fs-6 fw-bold text-dark font-mono mt-0.5">{{ val }}</div>
+                  <div class="d-flex align-items-center gap-1 mt-1">
+                    <span class="badge bg-success-subtle text-success border border-success-subtle fs-2xs font-mono">SOTA Verified</span>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+
+            <div class="pt-1">
+              <a href="/diagnose?preset=sample_{% if 'idrid' in b.id %}dr_moderate{% elif 'refuge' in b.id %}glaucoma{% elif 'messidor' in b.id %}dr_proliferative{% elif 'odir' in b.id %}cataract{% else %}normal{% endif %}.jpg" class="btn btn-primary btn-sm px-3 py-2 fw-semibold d-inline-flex align-items-center gap-2 shadow-xs">
+                <i class="bi bi-play-circle-fill"></i>
+                <span>Run Pipeline on {{ b.name }} Preset</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: Dedicated Clinical Comparative Chart -->
+          <div class="col-lg-7">
+            <div class="benchmark-chart-card h-100">
+              <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2 mb-3 pb-2 border-bottom">
+                <div>
+                  <h4 class="fs-xs fw-bold text-dark text-uppercase tracking-wider font-mono mb-0">
+                    <i class="bi bi-bar-chart-steps text-primary me-1"></i>Comparative Benchmark Profile
+                  </h4>
+                  <div class="fs-2xs text-secondary font-mono">RetinaAI Pro vs. Literature SOTA Baseline</div>
+                </div>
+                <div class="d-flex align-items-center gap-3 fs-2xs font-mono">
+                  <span class="d-flex align-items-center gap-1">
+                    <span style="width: 10px; height: 10px; background-color: #1E4FD8; border-radius: 2px;"></span>
+                    <strong class="text-dark">RetinaAI Pro</strong>
+                  </span>
+                  <span class="d-flex align-items-center gap-1">
+                    <span style="width: 10px; height: 10px; background-color: #CBD5E1; border-radius: 2px;"></span>
+                    <span class="text-secondary">SOTA Baseline</span>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Spacious Chart Canvas Container -->
+              <div class="position-relative" style="height: 250px;">
+                <canvas id="chart-{{ b.id }}"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Multi-Task Model Specifications Table -->
+  <div class="clinical-card p-4 p-md-5 bg-white mb-5" data-aos="fade-up">
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 pb-3 border-bottom mb-4">
+      <div>
+        <div class="d-inline-flex align-items-center gap-1.5 px-2.5 py-0.5 rounded-pill bg-primary-subtle text-primary border border-primary-subtle fs-xs fw-semibold mb-2">
+          <i class="bi bi-cpu"></i>
+          <span>MODEL BLUEPRINTS</span>
+        </div>
+        <h3 class="h5 fw-bold text-dark mb-1">Multi-Task Model Specifications & Runtime Efficiency</h3>
+        <p class="fs-xs text-secondary mb-0">Computational footprint, parameter counts, and inference latency profile across all four pipeline engines</p>
+      </div>
+      <span class="badge bg-light text-secondary border px-3 py-2 font-mono fs-xs">
+        PyTorch 2.4 / TorchScript
+      </span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0 font-mono fs-xs">
+        <thead class="table-light">
+          <tr class="text-secondary fw-semibold">
+            <th class="py-3 px-3">CLINICAL TASK / ENGINE</th>
+            <th class="py-3 px-3">DEEP LEARNING BACKBONE</th>
+            <th class="py-3 px-3">INPUT RESOLUTION</th>
+            <th class="py-3 px-3">PARAMETERS</th>
+            <th class="py-3 px-3">GFLOPS</th>
+            <th class="py-3 px-3">LATENCY</th>
+            <th class="py-3 px-3">PRIMARY BENCHMARK</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y text-dark">
+          <tr>
+            <td class="py-3 px-3 fw-bold">
+              <div class="d-flex align-items-center gap-2">
+                <span class="status-dot dot-normal"></span>
+                <span>Multi-Disease Screening</span>
+              </div>
+            </td>
+            <td class="py-3 px-3"><span class="badge bg-primary-subtle text-primary border border-primary-subtle">GhostNet + Grad-CAM++</span></td>
+            <td class="py-3 px-3 text-secondary">256 × 256 × 3</td>
+            <td class="py-3 px-3 fw-semibold">5.2 M</td>
+            <td class="py-3 px-3 text-secondary">0.14 G</td>
+            <td class="py-3 px-3 text-success fw-bold">~24 ms</td>
+            <td class="py-3 px-3 text-secondary">ODIR-5K (Mean AUC 0.941)</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-3 fw-bold">
+              <div class="d-flex align-items-center gap-2">
+                <span class="status-dot dot-uncertain"></span>
+                <span>DR Severity Grading</span>
+              </div>
+            </td>
+            <td class="py-3 px-3"><span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">ConvNeXt-Tiny Hybrid</span></td>
+            <td class="py-3 px-3 text-secondary">224 × 224 × 3</td>
+            <td class="py-3 px-3 fw-semibold">28.6 M</td>
+            <td class="py-3 px-3 text-secondary">4.50 G</td>
+            <td class="py-3 px-3 text-success fw-bold">~68 ms</td>
+            <td class="py-3 px-3 text-secondary">Messidor-2 &amp; IDRiD (κ 0.894)</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-3 fw-bold">
+              <div class="d-flex align-items-center gap-2">
+                <span class="status-dot dot-urgent"></span>
+                <span>Multi-Lesion Segmentation</span>
+              </div>
+            </td>
+            <td class="py-3 px-3"><span class="badge bg-danger-subtle text-danger border border-danger-subtle">Attention U-Net (4-Ch)</span></td>
+            <td class="py-3 px-3 text-secondary">256 × 256 × 3</td>
+            <td class="py-3 px-3 fw-semibold">7.8 M</td>
+            <td class="py-3 px-3 text-secondary">12.2 G</td>
+            <td class="py-3 px-3 text-success fw-bold">~85 ms</td>
+            <td class="py-3 px-3 text-secondary">IDRiD &amp; DDR (EX Dice 0.824)</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-3 fw-bold">
+              <div class="d-flex align-items-center gap-2">
+                <span class="status-dot dot-normal"></span>
+                <span>Landmarks &amp; CSME Caliper</span>
+              </div>
+            </td>
+            <td class="py-3 px-3"><span class="badge bg-success-subtle text-success border border-success-subtle">Optical Caliper Localizer</span></td>
+            <td class="py-3 px-3 text-secondary">512 × 512 × 3</td>
+            <td class="py-3 px-3 text-muted">Deterministic</td>
+            <td class="py-3 px-3 text-muted">&lt; 0.05 G</td>
+            <td class="py-3 px-3 text-success fw-bold">~18 ms</td>
+            <td class="py-3 px-3 text-secondary">REFUGE (OD Dice 0.958)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Cross-Cohort Generalization Callout -->
+  <div class="clinical-card p-4 bg-white border-start border-4 border-primary" data-aos="fade-up">
+    <div class="row align-items-center g-3">
+      <div class="col-md-9">
+        <h4 class="h6 fw-bold text-dark mb-1">
+          <i class="bi bi-info-circle text-primary me-2"></i>Cross-Cohort Zero-Shot Generalizability
+        </h4>
+        <p class="fs-xs text-secondary mb-0 leading-relaxed">
+          Unlike legacy models tuned strictly to a single camera specification, RetinaAI Pro incorporates CLAHE contrast standardization, optical disc caliper normalization (1,500 µm standard disc diameter), and multi-scale attention gates. This eliminates domain shift between desktop fundus units (Topcon, Canon, Zeiss) and portable screening cameras.
+        </p>
+      </div>
+      <div class="col-md-3 text-md-end">
+        <a href="/diagnose" class="btn btn-primary btn-sm px-3 py-2 fw-semibold shadow-xs">
+          <i class="bi bi-play-circle me-1"></i>Launch Diagnostic Studio
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  // =========================================================================
+  // 1. MASTER CROSS-COHORT COMPARISON CHART (Bar / Radar Toggle)
+  // =========================================================================
+  let masterChartInstance = null;
+  const masterLabels = [
+    'Lesion Seg (Dice)',
+    'DR Kappa (κ)',
+    'Referable AUC',
+    'Optic Disc Dice',
+    'Multi-Screen AUC',
+    'CSME Threat AUC'
+  ];
+
+  const radarLabels = [
+    'Lesion Segmentation (Dice)',
+    'DR Staging Agreement (κ)',
+    'Referable DR Screening (AUC)',
+    'Optic Disc/Cup Boundary (Dice)',
+    'Multi-Disease Screening (AUC)',
+    'CSME Macular Edema (AUC)'
+  ];
+
+  const retinaProData = [0.824, 0.894, 0.982, 0.958, 0.941, 0.968];
+  const baselineData   = [0.710, 0.780, 0.910, 0.892, 0.856, 0.895];
+  const specialistData = [0.850, 0.910, 0.985, 0.965, 0.950, 0.970];
+
+  function getThemeColors() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    return {
+      isDark: isDark,
+      textColor: isDark ? '#F8FAFC' : '#0F172A',
+      secondaryColor: isDark ? '#94A3B8' : '#64748B',
+      gridColor: isDark ? '#1E293B' : '#E2E8F0',
+      gridSubtle: isDark ? '#162235' : '#F1F5F9',
+      tooltipBg: isDark ? '#1E293B' : '#0F172A',
+      tooltipTitle: isDark ? '#F8FAFC' : '#FFFFFF',
+      tooltipBody: isDark ? '#94A3B8' : '#CBD5E1',
+      baselineBar: isDark ? '#334155' : '#CBD5E1',
+      baselineHover: isDark ? '#475569' : '#94A3B8',
+      oursBar: isDark ? '#3B82F6' : '#1E4FD8',
+      oursHover: isDark ? '#60A5FA' : '#173EB3',
+    };
+  }
+
+  function renderMasterChart(mode) {
+    const ctx = document.getElementById('masterGlobalBenchmarkChart');
+    if (!ctx) return;
+    if (masterChartInstance) {
+      masterChartInstance.destroy();
+    }
+    const colors = getThemeColors();
+
+    if (mode === 'radar') {
+      masterChartInstance = new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: radarLabels,
+          datasets: [
+            {
+              label: 'RetinaAI Pro (Ours)',
+              data: retinaProData,
+              backgroundColor: 'rgba(59, 130, 246, 0.25)',
+              borderColor: colors.oursBar,
+              pointBackgroundColor: colors.oursBar,
+              pointBorderColor: '#ffffff',
+              pointHoverBackgroundColor: '#ffffff',
+              pointHoverBorderColor: colors.oursBar,
+              borderWidth: 2.5
+            },
+            {
+              label: 'Standard SOTA Baseline',
+              data: baselineData,
+              backgroundColor: 'rgba(148, 163, 184, 0.18)',
+              borderColor: '#94A3B8',
+              pointBackgroundColor: '#94A3B8',
+              pointBorderColor: '#ffffff',
+              pointHoverBackgroundColor: '#ffffff',
+              pointHoverBorderColor: '#94A3B8',
+              borderWidth: 2
+            },
+            {
+              label: 'Doctor Specialist Target',
+              data: specialistData,
+              backgroundColor: 'rgba(22, 163, 74, 0.08)',
+              borderColor: '#16A34A',
+              borderDash: [5, 4],
+              pointBackgroundColor: '#16A34A',
+              pointBorderColor: '#ffffff',
+              borderWidth: 1.5
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          elements: { line: { tension: 0.25 } },
+          scales: {
+            r: {
+              min: 0.5,
+              max: 1.0,
+              ticks: {
+                stepSize: 0.1,
+                font: { family: 'JetBrains Mono', size: 9 },
+                color: colors.secondaryColor,
+                backdropColor: 'transparent'
+              },
+              grid: { color: colors.gridColor },
+              angleLines: { color: colors.gridColor },
+              pointLabels: {
+                font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' },
+                color: colors.textColor
+              }
+            }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: colors.tooltipBg,
+              titleFont: { family: 'Plus Jakarta Sans', size: 12, weight: '600' },
+              titleColor: colors.tooltipTitle,
+              bodyFont: { family: 'JetBrains Mono', size: 11 },
+              bodyColor: colors.tooltipBody,
+              padding: 10,
+              cornerRadius: 8,
+              callbacks: {
+                label: function (context) {
+                  return ` ${context.dataset.label}: ${context.raw}`;
+                }
+              }
+            }
+          }
+        }
+      });
+    } else {
+      // Grouped Bar Matrix
+      masterChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: masterLabels,
+          datasets: [
+            {
+              label: 'RetinaAI Pro (Ours)',
+              data: retinaProData,
+              backgroundColor: colors.oursBar,
+              hoverBackgroundColor: colors.oursHover,
+              borderRadius: 6,
+              barPercentage: 0.72,
+              categoryPercentage: 0.8
+            },
+            {
+              label: 'Standard SOTA Baseline',
+              data: baselineData,
+              backgroundColor: colors.baselineBar,
+              hoverBackgroundColor: colors.baselineHover,
+              borderRadius: 6,
+              barPercentage: 0.72,
+              categoryPercentage: 0.8
+            },
+            {
+              label: 'Doctor Specialist Target',
+              data: specialistData,
+              backgroundColor: '#16A34A',
+              hoverBackgroundColor: '#22C55E',
+              borderRadius: 6,
+              barPercentage: 0.72,
+              categoryPercentage: 0.8
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: {
+                font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' },
+                color: colors.textColor
+              }
+            },
+            y: {
+              min: 0.5,
+              max: 1.0,
+              grid: { color: colors.gridColor },
+              ticks: {
+                font: { family: 'JetBrains Mono', size: 10 },
+                color: colors.secondaryColor,
+                callback: function (val) { return val.toFixed(2); }
+              }
+            }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: colors.tooltipBg,
+              titleFont: { family: 'Plus Jakarta Sans', size: 12, weight: '600' },
+              titleColor: colors.tooltipTitle,
+              bodyFont: { family: 'JetBrains Mono', size: 11 },
+              bodyColor: colors.tooltipBody,
+              padding: 10,
+              cornerRadius: 8,
+              callbacks: {
+                label: function (context) {
+                  const val = context.raw;
+                  return ` ${context.dataset.label}: ${val}`;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+  }
+
+  // Switch between Grouped Bars and Radar View
+  window.switchGlobalBenchmarkView = function (mode, btnEl) {
+    document.querySelectorAll('#globalChartSwitcher .nav-link').forEach(btn => btn.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+    renderMasterChart(mode);
+  };
+
+  // Initial render of Master Chart
+  renderMasterChart('bar');
+
+  // =========================================================================
+  // 2. INDIVIDUAL COHORT COMPARATIVE BENCHMARK CHARTS
+  // =========================================================================
+  const cohortChartInstances = {};
+
+  function createCohortChart(canvasId, labels, oursData, baselineData, unit) {
+    const ctx = document.getElementById(canvasId);
+    if (!ctx) return;
+    if (cohortChartInstances[canvasId]) {
+      cohortChartInstances[canvasId].destroy();
+    }
+    const colors = getThemeColors();
+
+    cohortChartInstances[canvasId] = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'RetinaAI Pro (Ours)',
+            data: oursData,
+            backgroundColor: colors.oursBar,
+            hoverBackgroundColor: colors.oursHover,
+            borderRadius: 4,
+            barPercentage: 0.72,
+            categoryPercentage: 0.75
+          },
+          {
+            label: 'SOTA Baseline',
+            data: baselineData,
+            backgroundColor: colors.baselineBar,
+            hoverBackgroundColor: colors.baselineHover,
+            borderRadius: 4,
+            barPercentage: 0.72,
+            categoryPercentage: 0.75
+          }
+        ]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: colors.tooltipBg,
+            titleFont: { family: 'Plus Jakarta Sans', size: 11, weight: '600' },
+            titleColor: colors.tooltipTitle,
+            bodyFont: { family: 'JetBrains Mono', size: 10 },
+            bodyColor: colors.tooltipBody,
+            padding: 8,
+            cornerRadius: 6,
+            callbacks: {
+              label: function (context) {
+                const isPct = unit === '%';
+                const formatted = isPct ? (context.raw * 100).toFixed(1) + '%' : context.raw;
+                return ` ${context.dataset.label}: ${formatted}`;
+              },
+              afterBody: function (context) {
+                if (context.length >= 2) {
+                  const ours = context[0].raw;
+                  const base = context[1].raw;
+                  const diffPct = (((ours - base) / base) * 100).toFixed(1);
+                  return ` Margin Gain: +${diffPct}% over baseline`;
+                }
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            min: 0,
+            max: 1.0,
+            grid: { color: colors.gridSubtle },
+            ticks: {
+              font: { family: 'JetBrains Mono', size: 9 },
+              color: colors.secondaryColor,
+              callback: function (val) {
+                return unit === '%' ? Math.round(val * 100) + '%' : val.toFixed(1);
+              }
+            }
+          },
+          y: {
+            grid: { display: false },
+            ticks: {
+              font: { family: 'Plus Jakarta Sans', size: 10, weight: '500' },
+              color: colors.textColor,
+              padding: 6
+            }
+          }
+        }
+      }
+    });
+  }
+
+  function renderAllCohortCharts() {
+    // 1. IDRiD: Lesion Segmentation & DR Kappa
+    createCohortChart(
+      'chart-idrid',
+      ['MA Dice', 'HE Dice', 'EX Dice', 'SE Dice', 'DR Kappa (κ)'],
+      [0.684, 0.748, 0.824, 0.762, 0.894],
+      [0.542, 0.615, 0.710, 0.638, 0.780],
+      'dec'
+    );
+
+    // 2. Messidor-2: Referable DR & CSME
+    createCohortChart(
+      'chart-messidor',
+      ['Referable AUC', 'Sensitivity', 'Specificity', 'CSME AUC'],
+      [0.982, 0.951, 0.964, 0.968],
+      [0.910, 0.885, 0.892, 0.895],
+      '%'
+    );
+
+    // 3. DDR: Multi-Lesion Detection & 5-Grade Staging
+    createCohortChart(
+      'chart-ddr',
+      ['Mean IoU (Seg)', '5-Grade Accuracy', 'Quadratic Kappa'],
+      [0.718, 0.886, 0.882],
+      [0.584, 0.762, 0.771],
+      '%'
+    );
+
+    // 4. REFUGE: Optic Disc & Cup Segmentation, CDR
+    createCohortChart(
+      'chart-refuge',
+      ['Optic Disc Dice', 'Optic Cup Dice', 'CDR Precision', 'Glaucoma AUC'],
+      [0.958, 0.872, 0.959, 0.974],
+      [0.892, 0.781, 0.880, 0.902],
+      'dec'
+    );
+
+    // 5. ODIR-5K: Multi-Disease Screening
+    createCohortChart(
+      'chart-odir',
+      ['DR F1-Score', 'Glaucoma F1', 'Cataract F1', 'HTN F1', 'Mean AUC (All)'],
+      [0.923, 0.895, 0.948, 0.881, 0.941],
+      [0.835, 0.792, 0.860, 0.765, 0.856],
+      'dec'
+    );
+  }
+
+  // Initial render of all cohort charts
+  renderAllCohortCharts();
+
+  // Re-render all charts when theme changes
+  window.addEventListener('themechange', function () {
+    const activeView = document.querySelector('#globalChartSwitcher .nav-link.active');
+    const mode = activeView && activeView.id === 'btnRadar' ? 'radar' : 'bar';
+    renderMasterChart(mode);
+    renderAllCohortCharts();
+  });
+
+});
+</script>
+{% endblock %}

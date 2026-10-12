@@ -1,6 +1,6 @@
 import os
 from datetime import datetime, timedelta
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from app.database.models import Base, Patient, ScanRecord
 
@@ -21,8 +21,59 @@ def get_db():
     finally:
         db.close()
 
+def migrate_db_columns():
+    """Dynamically add new columns to scan_records table if not present."""
+    with engine.connect() as conn:
+        try:
+            result = conn.execute(text("PRAGMA table_info(scan_records)"))
+            existing_cols = {row[1] for row in result.fetchall()}
+            if not existing_cols:
+                return
+            new_columns = [
+                ("dr_grade", "INTEGER DEFAULT 0"),
+                ("dr_stage_name", "VARCHAR(100)"),
+                ("hybrid_severity_score", "FLOAT"),
+                ("ma_count", "INTEGER DEFAULT 0"),
+                ("he_count", "INTEGER DEFAULT 0"),
+                ("he_area_pct", "FLOAT DEFAULT 0.0"),
+                ("ex_count", "INTEGER DEFAULT 0"),
+                ("ex_area_pct", "FLOAT DEFAULT 0.0"),
+                ("se_count", "INTEGER DEFAULT 0"),
+                ("se_area_pct", "FLOAT DEFAULT 0.0"),
+                ("total_lesion_pixels", "INTEGER DEFAULT 0"),
+                ("optic_disc_x", "INTEGER"),
+                ("optic_disc_y", "INTEGER"),
+                ("optic_disc_radius", "INTEGER"),
+                ("fovea_x", "INTEGER"),
+                ("fovea_y", "INTEGER"),
+                ("fovea_dist_dd", "FLOAT"),
+                ("csme_risk", "VARCHAR(100)"),
+                ("eye_laterality", "VARCHAR(50) DEFAULT 'Right Eye (OD)'"),
+                ("multi_disease_json", "TEXT"),
+                ("mask_composite_filename", "VARCHAR(255)"),
+                ("landmark_filename", "VARCHAR(255)"),
+                ("mask_ma_filename", "VARCHAR(255)"),
+                ("mask_he_filename", "VARCHAR(255)"),
+                ("mask_ex_filename", "VARCHAR(255)"),
+                ("mask_se_filename", "VARCHAR(255)"),
+                ("redfree_filename", "VARCHAR(255)"),
+                ("gradcam_turbo_filename", "VARCHAR(255)"),
+                ("gradcam_jet_filename", "VARCHAR(255)"),
+                ("gradcam_viridis_filename", "VARCHAR(255)"),
+                ("microns_per_pixel", "FLOAT"),
+                ("etdrs_json", "TEXT"),
+                ("uncertainty_json", "TEXT"),
+            ]
+            for col, col_type in new_columns:
+                if col not in existing_cols:
+                    conn.execute(text(f"ALTER TABLE scan_records ADD COLUMN {col} {col_type}"))
+            conn.commit()
+        except Exception as e:
+            print("Database migration notice:", e)
+
 def init_db():
     Base.metadata.create_all(bind=engine)
+    migrate_db_columns()
     db = SessionLocal()
     try:
         # Check if already seeded
